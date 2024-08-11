@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Weather Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Import Google font - Poppins */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+        }
+        body {
+          background: #E3F2FD;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          z-index: -1;
+          filter: blur(10px);
+        }
+        h1 {
+          font-size: 2.5rem;
+          text-align: center;
+          color: #fff;
+          font-weight: 700;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+          display: flex;
+          gap: 35px;
+          padding: 30px;
+          z-index: 1;
+          flex-direction: column;
+          align-items: center;
+        }
+        .weather-input {
+          width: 100%;
+          max-width: 600px;
+        }
+        .weather-input input {
+          height: 50px;
+          width: 100%;
+          outline: none;
+          font-size: 1.2rem;
+          padding: 0 20px;
+          margin: 10px 0 20px 0;
+          border-radius: 25px;
+          border: 1px solid #5372F0;
+        }
+        .weather-input input:focus {
+          border: 2px solid #2c52ed;
+        }
+        .weather-input .separator {
+          height: 1px;
+          width: 100%;
+          margin: 25px 0;
+          background: #BBBBBB;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .weather-input .separator::before {
+          content: "or";
+          color: #6C757D;
+          font-size: 1.2rem;
+          padding: 0 15px;
+          margin-top: -4px;
+          background: #E3F2FD;
+        }
+        .weather-input button {
+          width: 100%;
+          padding: 12px 0;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          border-radius: 25px;
+          font-size: 1.2rem;
+          color: #fff;
+          background: #5372F0;
+          transition: 0.2s ease;
+        }
+        .weather-input .search-btn:hover {
+          background: #2c52ed;
+        }
+        .weather-input .location-btn {
+          background: #2c52ed;
+        }
+        .weather-input .location-btn:hover {
+          background: #1b3cb8;
+        }
+        .weather-data {
+          width: 100%;
+          display: none; /* Hide by default */
+          max-width: 1200px;
+        }
+        .weather-data .current-weather {
+          color: #fff;
+          background: rgba(227, 232, 255, 0.6);
+          border-radius: 20px;
+          padding: 30px 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          backdrop-filter: blur(15px);
+        }
+        .current-weather h2 {
+          font-weight: 700;
+          font-size: 2.2rem;
+        }
+        .weather-data h6 {
+          margin-top: 12px;
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+        .current-weather .icon {
+          text-align: center;
+        }
+        .current-weather .icon img {
+          max-width: 150px;
+          margin-top: -15px;
+        }
+        .current-weather .icon h6 {
+          margin-top: -10px;
+          text-transform: capitalize;
+        }
+        .days-forecast h2 {
+          margin: 20px 0;
+          font-size: 2rem;
+          color: #fff;
+          font-weight: 600;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .days-forecast .weather-cards {
+          display: flex;
+          gap: 25px;
+        }
+        .weather-cards .card {
+          color: #fff;
+          padding: 25px 20px;
+          list-style: none;
+          width: calc(100% / 3 - 20px);
+          background: rgba(176, 190, 248, 0.6);
+          border-radius: 20px;
+          text-align: center;
+          backdrop-filter: blur(15px);
+          transition: transform 0.2s ease-in-out;
+        }
+        .weather-cards .card:hover {
+          transform: scale(1.05);
+        }
+        .weather-cards .card h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 15px;
+        }
+        .weather-cards .card img {
+          max-width: 70px;
+          margin-bottom: 15px;
+        }
+        .weather-cards .card h6 {
+          font-size: 1.2rem;
+        }
+        
+        @media (max-width: 1200px) {
+          .weather-cards .card {
+            width: calc(100% / 2 - 20px);
+          }
+        }
+        @media (max-width: 950px) {
+          .weather-input {
+            width: 90%;
+          }
+          .weather-cards .card {
+            width: calc(100% / 2 - 15px);
+          }
+        }
+        @media (max-width: 750px) {
+          h1 {
+            font-size: 1.8rem;
+            padding: 16px 0;
+          }
+          .container {
+            flex-wrap: wrap;
+            padding: 15px;
+          }
+          .weather-input {
+            width: 100%;
+          }
+          .weather-data h2 {
+            font-size: 1.5rem;
+          }
+          .weather-cards .card {
+            width: 100%;
+          }
+        }
+    </style>
+    <script th:inline="javascript">
+        var WEATHER_API_KEY = /*[[${weatherApiKey}]]*/ 'DEFAULT_KEY';
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const cityInput = document.querySelector(".city-input");
+    const searchButton = document.querySelector(".search-btn");
+    const locationButton = document.querySelector(".location-btn");
+    const currentWeatherDiv = document.querySelector(".current-weather");
+    const weatherCardsDiv = document.querySelector(".weather-cards");
+    const backgroundDiv = document.querySelector('.background');
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { weekday: 'long', month: 'long', day: '2-digit' };
+        return date.toLocaleDateString(undefined, options);
+    };
+
+    const setDynamicBackground = (weatherDescription) => {
+        let imageUrl = '';
+        switch (weatherDescription.toLowerCase()) {
+            case 'clear sky':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'few clouds':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'scattered clouds':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'broken clouds':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'shower rain':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'rain':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'thunderstorm':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'snow':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            case 'mist':
+                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                break;
+            default:
+                imageUrl = 'url("https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg")';
+        }
+        backgroundDiv.style.backgroundImage = imageUrl;
+    };
+
+    const createWeatherCard = (cityName, weatherItem, index) => {
+        const formattedDate = formatDate(weatherItem.dt_txt);
+        if(index === 0) { // HTML for the main weather card
+            setDynamicBackground(weatherItem.weather[0].description);
+            return `<div class="details">
+                        <h2>${cityName} ${formattedDate}</h2>
+                        <h6>Temperature: ${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
+                        <h6>Wind: ${weatherItem.wind.speed} M/S</h6>
+                        <h6>Humidity: ${weatherItem.main.humidity}%</h6>
+                    </div>
+                    <div class="icon">
+                        <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}@4x.png" alt="weather-icon">
+                        <h6>${weatherItem.weather[0].description}</h6>
+                    </div>`;
+        } else { // HTML for the other five day forecast card
+            return `<li class="card">
+                        <h3>${formattedDate}</h3>
+                        <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}@4x.png" alt="weather-icon">
+                        <h6>Temp: ${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
+                        <h6>Wind: ${weatherItem.wind.speed} M/S</h6>
+                        <h6>Humidity: ${weatherItem.main.humidity}%</h6>
+                    </li>`;
+        }
+    };
+
+    const getWeatherDetails = (cityName, latitude, longitude) => {
+        const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}`;
+
+        fetch(WEATHER_API_URL).then(response => response.json()).then(data => {
+            // Show the weather-data section
+            document.querySelector('.weather-data').style.display = 'block';
+
+            // Filter the forecasts to get only one forecast per day
+            const uniqueForecastDays = [];
+            const fiveDaysForecast = data.list.filter(forecast => {
+                const forecastDate = new Date(forecast.dt_txt).getDate();
+                if (!uniqueForecastDays.includes(forecastDate)) {
+                    return uniqueForecastDays.push(forecastDate);
+                }
+            });
+
+            // Clearing previous weather data
+            cityInput.value = "";
+            currentWeatherDiv.innerHTML = "";
+            weatherCardsDiv.innerHTML = "";
+
+            // Creating weather cards and adding them to the DOM
+            fiveDaysForecast.forEach((weatherItem, index) => {
+                const html = createWeatherCard(cityName, weatherItem, index);
+                if (index === 0) {
+                    currentWeatherDiv.insertAdjacentHTML("beforeend", html);
+                } else {
+                    weatherCardsDiv.insertAdjacentHTML("beforeend", html);
+                }
+            });        
+        }).catch(() => {
+            alert("An error occurred while fetching the weather forecast!");
+        });
+    };
+
+    const getCityCoordinates = () => {
+        const cityName = cityInput.value.trim();
+        if (cityName === "") return;
+        const API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${WEATHER_API_KEY}`;
+        
+        // Get entered city coordinates (latitude, longitude, and name) from the API response
+        fetch(API_URL).then(response => response.json()).then(data => {
+            if (!data.length) return alert(`No coordinates found for ${cityName}`);
+            const { lat, lon, name } = data[0];
+            getWeatherDetails(name, lat, lon);
+        }).catch(() => {
+            alert("An error occurred while fetching the coordinates!");
+        });
+    };
+
+    const getUserCoordinates = () => {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const { latitude, longitude } = position.coords; // Get coordinates of user location
+                // Get city name from coordinates using reverse geocoding API
+                const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${WEATHER_API_KEY}`;
+                fetch(API_URL).then(response => response.json()).then(data => {
+                    const { name } = data[0];
+                    getWeatherDetails(name, latitude, longitude);
+                }).catch(() => {
+                    alert("An error occurred while fetching the city name!");
+                });
+            },
+            error => { // Show alert if user denied the location permission
+                if (error.code === error.PERMISSION_DENIED) {
+                    alert("Geolocation request denied. Please reset location permission to grant access again.");
+                } else {
+                    alert("Geolocation request error. Please reset location permission.");
+                }
+            });
+    };
+
+    locationButton.addEventListener("click", getUserCoordinates);
+    searchButton.addEventListener("click", getCityCoordinates);
+    cityInput.addEventListener("keyup", e => e.key === "Enter" && getCityCoordinates());
+});
+
+    </script>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="container">
+        <h1 class="pt-5">Weather Dashboard</h1>
+        <div class="weather-input">
+            <input class="city-input" type="text" placeholder="Enter a city name (e.g., New York, London, Tokyo)">
+            <button class="search-btn btn btn-info text-white">Search</button>
+            <div class="separator"></div>
+            <button class="location-btn btn btn-secondary text-white">Use Current Location</button>
+        </div>
+        <div class="weather-data">
+            <div class="current-weather">
+                <div class="details">
+                    <h2>_______  ______ </h2>
+                    <h6>Temperature: __°C</h6>
+                    <h6>Wind: __ M/S</h6>
+                    <h6>Humidity: __%</h6>
+                </div>
+                <div class="icon">
+                    <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                    <h6>description</h6>
+                </div>
+            </div>
+            <div class="days-forecast">
+                <h2>5-Day Forecast</h2>
+                <ul class="weather-cards">
+                    <li class="card">
+                        <h3> ______ </h3>
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                        <h6>Temp: __C</h6>
+                        <h6>Wind: __ M/S</h6>
+                        <h6>Humidity: __%</h6>
+                    </li>
+                    <li class="card">
+                        <h3> ______ </h3>
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                        <h6>Temp: __C</h6>
+                        <h6>Wind: __ M/S</h6>
+                        <h6>Humidity: __%</h6>
+                    </li>
+                    <li class="card">
+                        <h3> ______ </h3>
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                        <h6>Temp: __C</h6>
+                        <h6>Wind: __ M/S</h6>
+                        <h6>Humidity: __%</h6>
+                    </li>
+                    <li class="card">
+                        <h3> ______ </h3>
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                        <h6>Temp: __C</h6>
+                        <h6>Wind: __ M/S</h6>
+                        <h6>Humidity: __%</h6>
+                    </li>
+                    <li class="card">
+                        <h3> ______ </h3>
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="weather-icon">
+                        <h6>Temp: __C</h6>
+                        <h6>Wind: __ M/S</h6>
+                        <h6>Humidity: __%</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-whx6eM2/q2zBYMrdWbEFKWDmEn8YlZnnwLlTz0klEhoCg4RC6JoRPt3t3mgY4dN2" crossorigin="anonymous"></script>
+</body>
+</html>
