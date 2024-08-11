@@ -177,6 +177,12 @@
             text-align: center;
             font-size: 1.1rem;
         }
+
+        .route-details .travel-mode i {
+            font-size: 1.5rem; /* Increase the size of the travel mode icon */
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 
@@ -240,7 +246,7 @@
                                     <p th:text="${#strings.replace(route.endPoint, '%2C', ',')}">End Point</p>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center travel-mode">
                                 <i th:classappend="'mdi mdi-travel-mode ' +
                                                 (${route.travelMode} == 'driving' ? 'mdi-car' : '') +
                                                 (${route.travelMode} == 'transit' ? 'mdi-train' : '') +
