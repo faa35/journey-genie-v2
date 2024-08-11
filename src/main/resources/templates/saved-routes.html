@@ -78,7 +78,8 @@
         }
 
         .route-card .edit-button,
-        .route-card .delete-button {
+        .route-card .delete-button,
+        .route-card .checklist-button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,12 +91,24 @@
             cursor: pointer;
             font-size: 16px;
             position: absolute;
-            top: 10px;
         }
 
         .route-card .edit-button {
-            right: 60px; /* Adjusted to make space for the delete button */
+            top: 10px;
+            right: 60px;
             color: #007bff;
+        }
+
+        .edit-button:focus {
+            outline: none;
+        }
+
+        .edit-button .mdi {
+            margin-right: 8px;
+        }
+
+        .edit-button>.mdi-pencil-outline {
+            display: block;
         }
 
         .edit-button:hover {
@@ -107,8 +120,13 @@
         }
 
         .route-card .delete-button {
-            right: 10px; /* Moved to the right of the edit button */
+            top: 10px;
+            right: 10px;
             color: red;
+        }
+
+        .delete-button:focus {
+            outline: none;
         }
 
         .delete-button .mdi {
@@ -133,6 +151,33 @@
 
         .delete-button:focus {
             box-shadow: 0 0 0 4px #ff9999;
+        }
+
+        .route-card .checklist-button {
+            bottom: 10px;
+            right: 10px;
+            color: #007bff;
+            font-size: 14px;
+        }
+
+        .checklist-button:focus {
+            outline: none;
+        }
+
+        .checklist-button .mdi {
+            margin-right: 8px;
+        }
+
+        .checklist-button>.mdi-clipboard-check-outline {
+            display: block;
+        }
+
+        .checklist-button:hover {
+            background-color: #e6f2ff;
+        }
+
+        .checklist-button:focus {
+            box-shadow: 0 0 0 4px #cce5ff;
         }
 
         .route-details .travel-mode i {
@@ -183,6 +228,12 @@
                     <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
                         <span class="mdi mdi-delete mdi-24px"></span>
                         <span class="mdi mdi-delete-empty mdi-24px"></span>
+                    </a>
+
+                    <!-- Checklist Button -->
+                    <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="checklist-button">
+                        <span class="mdi mdi-clipboard-check-outline mdi-24px"></span>
+                        <span>Checklist</span>
                     </a>
 
                     <!-- Route Details -->
