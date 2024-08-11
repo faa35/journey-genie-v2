@@ -9,7 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" rel="stylesheet">
     <style>
-        .route-card {
+        .route-card, .button-card {
             transition: transform 0.2s ease-in-out;
             cursor: pointer;
             border: 1px solid #ccc;
@@ -24,7 +24,7 @@
             align-items: center;
         }
 
-        .route-card:hover {
+        .route-card:hover, .button-card:hover {
             transform: scale(1.05);
         }
 
@@ -33,7 +33,7 @@
             margin-right: 10px;
         }
 
-        .route-card a {
+        .route-card a, .button-card a {
             text-decoration: none;
             color: inherit;
         }
@@ -48,20 +48,24 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-direction: column;
         }
 
         .route-buttons a,
         .route-buttons .btn-delete {
             transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
         }
 
         .route-buttons .btn-delete {
             display: flex;
             align-items: center;
+            justify-content: center;
             background: none;
             border: 1px solid #ccc;
             height: 48px;
-            padding: 0 24px 0 16px;
+            padding: 0 24px;
             letter-spacing: .25px;
             border-radius: 24px;
             cursor: pointer;
@@ -139,34 +143,37 @@
             <div class="col-12">
                 <h1 class="text-center mb-5">Saved Routes</h1>
 
-                <!-- Route Card -->
-                <div th:each="route : ${routes}" class="route-card">
-                    <!-- Route Details -->
-                    <div class="route-details">
-                        <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
-                        <p th:text="${#strings.replace(route.startPoint, '%2C', ',')}">Start Point</p>
-                        <p th:text="${#strings.replace(route.endPoint, '%2C', ',')}">End Point</p>
-                        <div class="d-flex align-items-center">
-                            <i th:classappend="'mdi mdi-travel-mode ' +
-                                            (${route.travelMode} == 'driving' ? 'mdi-car' : '') +
-                                            (${route.travelMode} == 'transit' ? 'mdi-train' : '') +
-                                            (${route.travelMode} == 'walking' ? 'mdi-walk' : '') +
-                                            (${route.travelMode} == 'bicycling' ? 'mdi-bike' : '') +
-                                            (${route.travelMode} == 'flying' ? 'mdi-airplane' : '')"></i>
-                            <span>Travel Mode</span>
+                <!-- Route and Buttons Cards -->
+                <div th:each="route : ${routes}" class="d-flex align-items-start mb-4">
+                    <!-- Route Card -->
+                    <a th:href="@{'/route-details/' + ${route.id}}" class="route-card col-md-8">
+                        <div class="route-details">
+                            <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
+                            <p th:text="${#strings.replace(route.startPoint, '%2C', ',')}">Start Point</p>
+                            <p th:text="${#strings.replace(route.endPoint, '%2C', ',')}">End Point</p>
+                            <div class="d-flex align-items-center">
+                                <i th:classappend="'mdi mdi-travel-mode ' +
+                                                (${route.travelMode} == 'driving' ? 'mdi-car' : '') +
+                                                (${route.travelMode} == 'transit' ? 'mdi-train' : '') +
+                                                (${route.travelMode} == 'walking' ? 'mdi-walk' : '') +
+                                                (${route.travelMode} == 'bicycling' ? 'mdi-bike' : '') +
+                                                (${route.travelMode} == 'flying' ? 'mdi-airplane' : '')"></i>
+                                <span>Travel Mode</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <!-- Route Buttons -->
-                    <div class="route-buttons">
-                        <a th:href="@{'/route-details/' + ${route.id}}" class="btn btn-link">View Route</a>
-                        <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="btn btn-link">View Checklist</a>
-                        <a th:href="@{'/edit-route/' + ${route.id}}" class="btn btn-link">Edit Route</a>
-                        <a th:href="@{'/delete-route/' + ${route.id}}" class="btn-delete">
-                            <span class="mdi mdi-delete mdi-24px"></span>
-                            <span class="mdi mdi-delete-empty mdi-24px"></span>
-                            <span>DELETE</span>
-                        </a>
+                    <!-- Button Card -->
+                    <div class="button-card col-md-4">
+                        <div class="route-buttons">
+                            <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="btn btn-link">View Checklist</a>
+                            <a th:href="@{'/edit-route/' + ${route.id}}" class="btn btn-link">Edit Route</a>
+                            <a th:href="@{'/delete-route/' + ${route.id}}" class="btn-delete">
+                                <span class="mdi mdi-delete mdi-24px"></span>
+                                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                                <span>DELETE</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
