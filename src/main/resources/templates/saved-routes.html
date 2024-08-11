@@ -96,7 +96,6 @@
         .route-card .edit-button {
             top: 10px;
             color: #007bff;
-            /* border: 1px solid #007bff; */
         }
 
         .edit-button:focus {
@@ -122,7 +121,6 @@
         .route-card .delete-button {
             bottom: 10px;
             color: red;
-            /* border: 1px solid #ccc; */
         }
 
         .delete-button:focus {
@@ -153,36 +151,10 @@
             box-shadow: 0 0 0 4px #ff9999;
         }
 
-        .button-card {
-            transition: transform 0.2s ease-in-out;
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .button-card:hover {
-            transform: scale(1.05);
-        }
-
-        .button-card a {
-            transition: background-color 0.2s ease;
-            width: 100%;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
         .route-details .travel-mode i {
-            font-size: 1.5rem; /* Increase the size of the travel mode icon */
+            font-size: 1.5rem;
             margin-right: 10px;
         }
-
     </style>
 </head>
 
@@ -190,28 +162,18 @@
     <!-- Navigation bar -->
     <header>
         <nav class="navbar navbar-expand-md bg-info h4 px-4 py-3 text-white" style="min-height: 75px;">
-            <!-- Website name-->
             <span class="fs-4 px-2"> JourneyGenie </span>
-
-            <!-- Other pages -->
             <div class="navbar-collapse fs-5 d-flex justify-content-md-end justify-content-center">
                 <ul class="navbar-nav">
-                    <!-- Home -->
                     <form action="/home" method="GET">
                         <input type="submit" value="Home" class="btn btn-dark text-white mx-2"></input>
                     </form>
-
-                    <!-- Routes -->
                     <form action="/map" method="GET">
                         <input type="submit" value="Routes" class="btn btn-dark text-white mx-2"></input>
                     </form>
-
-                    <!-- Preferences -->
                     <form action="/preferences" method="GET">
                         <input type="submit" value="Preferences" class="btn btn-dark text-white mx-2"></input>
                     </form>
-
-                    <!-- Log out -->
                     <form action="/logout" method="POST">
                         <input type="submit" value="Log out" class="btn btn-danger text-white mx-2"></input>
                     </form>
@@ -226,47 +188,42 @@
             <div class="col-12">
                 <h1 class="text-center mb-5">Saved Routes</h1>
 
-                <!-- Route and Buttons Cards -->
-                <div th:each="route : ${routes}" class="d-flex align-items-start mb-4">
-                    <!-- Route Card -->
-                    <div class="route-card col-md-8">
-                        <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">
-                            <span class="mdi mdi-pencil-outline mdi-24px"></span>
-                        </a>
+                <!-- Route Cards -->
+                <div th:each="route : ${routes}" class="route-card" th:onclick="|window.location.href='@{/route-details/{id}(id=${route.id})}'|">
+                    <!-- Edit Button -->
+                    <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">
+                        <span class="mdi mdi-pencil-outline mdi-24px"></span>
+                    </a>
 
-                        <div class="route-details">
-                            <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
-                            <div class="location-group">
-                                <div class="location">
-                                    <i class="mdi mdi-checkbox-blank-circle-outline"></i>
-                                    <p th:text="${#strings.replace(route.startPoint, '%2C', ',')}">Start Point</p>
-                                </div>
-                                <div class="location">
-                                    <i class="mdi mdi-map-marker"></i>
-                                    <p th:text="${#strings.replace(route.endPoint, '%2C', ',')}">End Point</p>
-                                </div>
+                    <!-- Route Details -->
+                    <div class="route-details">
+                        <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
+                        <div class="location-group">
+                            <div class="location">
+                                <i class="mdi mdi-checkbox-blank-circle-outline"></i>
+                                <p th:text="${#strings.replace(route.startPoint, '%2C', ',')}">Start Point</p>
                             </div>
-                            <div class="d-flex align-items-center travel-mode">
-                                <i th:classappend="'mdi mdi-travel-mode ' +
-                                                (${route.travelMode} == 'driving' ? 'mdi-car' : '') +
-                                                (${route.travelMode} == 'transit' ? 'mdi-train' : '') +
-                                                (${route.travelMode} == 'walking' ? 'mdi-walk' : '') +
-                                                (${route.travelMode} == 'bicycling' ? 'mdi-bike' : '') +
-                                                (${route.travelMode} == 'flying' ? 'mdi-airplane' : '')"></i>
-                                <span>Travel Mode</span>
+                            <div class="location">
+                                <i class="mdi mdi-map-marker"></i>
+                                <p th:text="${#strings.replace(route.endPoint, '%2C', ',')}">End Point</p>
                             </div>
                         </div>
-
-                        <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
-                            <span class="mdi mdi-delete mdi-24px"></span>
-                            <span class="mdi mdi-delete-empty mdi-24px"></span>
-                        </a>
+                        <div class="d-flex align-items-center travel-mode">
+                            <i th:classappend="'mdi mdi-travel-mode ' +
+                                            (${route.travelMode} == 'driving' ? 'mdi-car' : '') +
+                                            (${route.travelMode} == 'transit' ? 'mdi-train' : '') +
+                                            (${route.travelMode} == 'walking' ? 'mdi-walk' : '') +
+                                            (${route.travelMode} == 'bicycling' ? 'mdi-bike' : '') +
+                                            (${route.travelMode} == 'flying' ? 'mdi-airplane' : '')"></i>
+                            <span>Travel Mode</span>
+                        </div>
                     </div>
 
-                    <!-- Button Card -->
-                    <div class="button-card col-md-4">
-                        <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="btn btn-link">View Checklist</a>
-                    </div>
+                    <!-- Delete Button -->
+                    <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
+                        <span class="mdi mdi-delete mdi-24px"></span>
+                        <span class="mdi mdi-delete-empty mdi-24px"></span>
+                    </a>
                 </div>
 
                 <!-- Navigation Buttons -->
@@ -277,7 +234,6 @@
                         <span>See Weather</span>
                     </a>
                 </div>
-
             </div>
         </div>
     </main>
