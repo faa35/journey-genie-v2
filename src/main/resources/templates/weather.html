@@ -225,6 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const weatherCardsDiv = document.querySelector(".weather-cards");
     const backgroundDiv = document.querySelector('.background');
 
+    // Default background image when the page loads
+    backgroundDiv.style.backgroundImage = 'url("https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg")';
+
     const fetchWeather = (lat, lng) => {
         const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`;
         fetch(weatherUrl)
@@ -264,6 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
 
+        // Update the background image based on the weather description
+        setDynamicBackground(currentWeather.weather[0].description);
+
         // Filter the forecasts to get one forecast per day
         const uniqueForecastDays = [];
         const fiveDaysForecast = data.list.filter(forecast => {
@@ -301,28 +307,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
                 break;
             case 'few clouds':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://images.pexels.com/photos/531767/pexels-photo-531767.jpeg")';
                 break;
             case 'scattered clouds':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://static.vecteezy.com/system/resources/previews/015/127/111/large_2x/scattered-clouds-in-the-sky-indicating-a-change-in-weather-free-photo.jpg")';
                 break;
             case 'broken clouds':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://plus.unsplash.com/premium_photo-1661897016268-b77ad5186d02?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2NhdHRlcmVkJTIwY2xvdWRzfGVufDB8fDB8fHww")';
                 break;
             case 'shower rain':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://www.skymetweather.com/content/wp-content/uploads/2019/08/Monsoon-2019-c.jpg")';
                 break;
             case 'rain':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://static.vecteezy.com/system/resources/thumbnails/042/146/518/small_2x/ai-generated-beautiful-rain-day-view-photo.jpg")';
                 break;
             case 'thunderstorm':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://www.wkbn.com/wp-content/uploads/sites/48/2021/07/lightning-thunder-thunderstorm-rain-severe-weather-spring-summer-fall-weather-generic-6.jpg?w=1280")';
                 break;
             case 'snow':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://i.redd.it/oc7hk36kw3uz.jpg")';
                 break;
             case 'mist':
-                imageUrl = 'url("https://media.istockphoto.com/id/1346840420/photo/summer-blue-sky-cloud-gradient-fade-white-background-beauty-clear-cloudy-in-sunshine-calm.webp?b=1&s=170667a&w=0&k=20&c=UDXTxulpuOtaZwztHHdUU1ErYBKQyT6_CEUe8mn7OWk=")';
+                imageUrl = 'url("https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?cs=srgb&dl=pexels-lum3n-44775-167699.jpg&fm=jpg")';
                 break;
             default:
                 imageUrl = 'url("https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg")';
