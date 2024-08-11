@@ -9,7 +9,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" rel="stylesheet">
     <style>
-        .route-card, .button-card {
+        .route-card,
+        .add-route-card {
             transition: transform 0.2s ease-in-out;
             cursor: pointer;
             border: 1px solid #ccc;
@@ -23,14 +24,12 @@
             align-items: center;
             text-decoration: none;
             color: inherit;
-        }
-
-        .route-card:hover, .button-card:hover {
-            transform: scale(1.05);
-        }
-
-        .route-card:not(:last-child), .button-card:not(:last-child) {
             margin-bottom: 20px;
+        }
+
+        .route-card:hover,
+        .add-route-card:hover {
+            transform: scale(1.05);
         }
 
         .route-details {
@@ -184,6 +183,24 @@
             font-size: 1.5rem;
             margin-right: 10px;
         }
+
+        /* Add Route Card */
+        .add-route-card {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .add-route-card .mdi {
+            font-size: 2rem;
+            color: #007bff;
+        }
+
+        .add-route-card span {
+            font-size: 1.2rem;
+            color: #007bff;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -218,7 +235,8 @@
                 <h1 class="text-center mb-5">Saved Routes</h1>
 
                 <!-- Route Cards -->
-                <div th:each="route : ${routes}" class="route-card" th:onclick="|window.location.href='@{/route-details/{id}(id=${route.id})}'|">
+                <div th:each="route : ${routes}" class="route-card"
+                    th:onclick="|window.location.href='@{/route-details/{id}(id=${route.id})}'|">
                     <!-- Edit Button -->
                     <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">
                         <span class="mdi mdi-pencil-outline mdi-24px"></span>
@@ -261,9 +279,14 @@
                     </div>
                 </div>
 
+                <!-- Add Route Card -->
+                <div class="add-route-card" onclick="window.location.href='/map'">
+                    <span class="mdi mdi-plus-circle-outline"></span>
+                    <span>Add </span>
+                </div>
                 <!-- Navigation Buttons -->
                 <div class="d-flex flex-wrap justify-content-between mt-5">
-                    <a href="/map" class="btn btn-link mt-3">Back to Routes</a>
+                    <!-- <a href="/map" class="btn btn-link mt-3">Back to Routes</a> -->
                     <a href="/track-budget" class="btn btn-warning btn-lg d-flex align-items-center">Track Budget</a>
                     <a href="/weather" class="btn btn-primary btn-lg d-flex align-items-center">
                         <span>See Weather</span>
