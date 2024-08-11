@@ -77,27 +77,23 @@
             text-overflow: ellipsis;
         }
 
-        .route-buttons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-direction: column;
-            text-align: center;
+        .route-card .edit-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 12px;
+            padding: 5px 10px;
+            font-size: 0.875rem;
         }
 
-        .route-buttons a,
-        .route-buttons .btn-delete {
-            transition: background-color 0.2s ease;
-            width: 100%;
-            text-align: center;
-        }
-
-        .route-buttons .btn-delete {
+        .route-card .delete-button {
             display: flex;
             align-items: center;
             justify-content: center;
             background: none;
-            border: 1px solid #ccc;
+            /* border: 1px solid #ccc; */
             height: 48px;
             padding: 0 24px;
             letter-spacing: .25px;
@@ -105,34 +101,62 @@
             cursor: pointer;
             font-size: 16px;
             color: red;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
         }
 
-        .btn-delete:focus {
+        .delete-button:focus {
             outline: none;
         }
 
-        .btn-delete .mdi {
+        .delete-button .mdi {
             margin-right: 8px;
         }
 
-        .btn-delete>.mdi-delete-empty {
+        .delete-button>.mdi-delete-empty {
             display: none;
         }
 
-        .btn-delete:hover {
+        .delete-button:hover {
             background-color: #ffcccc;
         }
 
-        .btn-delete:hover>.mdi-delete-empty {
+        .delete-button:hover>.mdi-delete-empty {
             display: block;
         }
 
-        .btn-delete:hover>.mdi-delete {
+        .delete-button:hover>.mdi-delete {
             display: none;
         }
 
-        .btn-delete:focus {
+        .delete-button:focus {
             box-shadow: 0 0 0 4px #ff9999;
+        }
+
+        .button-card {
+            transition: transform 0.2s ease-in-out;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-card:hover {
+            transform: scale(1.05);
+        }
+
+        .button-card a {
+            transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -180,7 +204,9 @@
                 <!-- Route and Buttons Cards -->
                 <div th:each="route : ${routes}" class="d-flex align-items-start mb-4">
                     <!-- Route Card -->
-                    <a th:href="@{'/route-details/' + ${route.id}}" class="route-card col-md-8">
+                    <div class="route-card col-md-8">
+                        <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">Edit</a>
+
                         <div class="route-details">
                             <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
                             <div class="location-group">
@@ -203,19 +229,18 @@
                                 <span>Travel Mode</span>
                             </div>
                         </div>
-                    </a>
+
+                        <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
+                            <span class="mdi mdi-delete mdi-24px"></span>
+                            <span class="mdi mdi-delete-empty mdi-24px"></span>
+                            <!-- <span>DELETE</span>  -->
+                            <span></span> 
+                        </a>
+                    </div>
 
                     <!-- Button Card -->
                     <div class="button-card col-md-4">
-                        <div class="route-buttons">
-                            <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="btn btn-link">View Checklist</a>
-                            <a th:href="@{'/edit-route/' + ${route.id}}" class="btn btn-link">Edit Route</a>
-                            <a th:href="@{'/delete-route/' + ${route.id}}" class="btn-delete">
-                                <span class="mdi mdi-delete mdi-24px"></span>
-                                <span class="mdi mdi-delete-empty mdi-24px"></span>
-                                <span>DELETE</span>
-                            </a>
-                        </div>
+                        <a th:href="@{'/makeChecklist/checklist/' + ${route.id}}" class="btn btn-link">View Checklist</a>
                     </div>
                 </div>
 
