@@ -76,34 +76,61 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h1 class="text-center mb-5">Route Details</h1>
+
                 <!-- Map -->
-                <!-- If there is a duplicate ID error here, ignore it -->
                 <th:block th:if="${#ctx.containsVariable('subArr')}">
                     <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen th:inline="javascript" th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&waypoints=' + ${#strings.arrayJoin(subArr, '|')} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
                 </th:block>
                 <th:block th:unless="${#ctx.containsVariable('subArr')}">
                     <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen th:inline="javascript" th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
                 </th:block>
-                <!-- <a href="/saved-routes" class="btn btn-link mt-3">Back to Saved Routes</a> -->
 
-                <!-- <a href="/weather" class="btn btn-primary mt-3 btn-lg btn-block"> See weather</a> -->
-                <div class="d-flex flex-wrap justify-content-between mt-3">
-                    <!-- Back to saved routes -->
-                    <a href="/saved-routes" class="btn btn-link mt-3">Back to Saved Routes</a>
+                <!-- Cards Row -->
+                <div class="row mt-4">
+                    <!-- Saved Routes Card -->
+                    <div class="col-md-4 col-sm-12 mb-4">
+                        <div class="card h-100">
+                            <a href="/saved-routes">
+                                <img src="https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44..v1643818850.jpg" alt="See your saved routes" class="card-img-top">
+                            </a>
+                            <div class="card-body">
+                                <a href="/saved-routes">
+                                    <h5 class="card-title">Saved Routes</h5>
+                                    <p class="card-text">View and manage your saved routes</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- Checklist button -->
-                    <form th:action = "@{/makeChecklist/checklist/{id}(id=${checklistID})}" method = "GET">
-                        <input type = "submit" value =  "View Checklist" class="btn btn-info btn-lg text-white py-3">
-                    </form>
-                    
-                    <!-- Budget tracker -->
-                    <!-- <a href="/track-budget" class="btn btn-warning btn-lg d-flex align-items-center">Track Budget</a> -->
+                    <!-- Checklist Card -->
+                    <div class="col-md-4 col-sm-12 mb-4">
+                        <div class="card h-100">
+                            <a th:href="@{/makeChecklist/checklist/{id}(id=${checklistID})}">
+                                <img src="https://www.wildapricot.com/wp-content/uploads/2022/04/WA-Blog-Thumbnails-Feb.png" alt="View Checklist" class="card-img-top">
+                            </a>
+                            <div class="card-body">
+                                <a th:href="@{/makeChecklist/checklist/{id}(id=${checklistID})}">
+                                    <h5 class="card-title">View Checklist</h5>
+                                    <p class="card-text">Review your checklist for the journey</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- See weather -->
-                    <a href="/weather" class="btn btn-primary btn-lg d-flex align-items-center">
-                        <!-- <i class="bi bi-cloud-sun weather-icon"></i> -->
-                        <span>See Weather</span>
-                    </a>
+                    <!-- Weather Card -->
+                    <div class="col-md-4 col-sm-12 mb-4">
+                        <div class="card h-100">
+                            <a href="/weather">
+                                <img src="https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg" alt="See Weather" class="card-img-top">
+                            </a>
+                            <div class="card-body">
+                                <a href="/weather">
+                                    <h5 class="card-title">Weather</h5>
+                                    <p class="card-text">Check the weather for your travel destinations</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Toggle Button for Local Places -->
