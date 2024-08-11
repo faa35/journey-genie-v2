@@ -90,24 +90,12 @@
             cursor: pointer;
             font-size: 16px;
             position: absolute;
-            right: 10px;
+            top: 10px;
         }
 
         .route-card .edit-button {
-            top: 10px;
+            right: 60px; /* Adjusted to make space for the delete button */
             color: #007bff;
-        }
-
-        .edit-button:focus {
-            outline: none;
-        }
-
-        .edit-button .mdi {
-            margin-right: 8px;
-        }
-
-        .edit-button>.mdi-pencil-outline {
-            display: block;
         }
 
         .edit-button:hover {
@@ -119,12 +107,8 @@
         }
 
         .route-card .delete-button {
-            bottom: 10px;
+            right: 10px; /* Moved to the right of the edit button */
             color: red;
-        }
-
-        .delete-button:focus {
-            outline: none;
         }
 
         .delete-button .mdi {
@@ -195,6 +179,12 @@
                         <span class="mdi mdi-pencil-outline mdi-24px"></span>
                     </a>
 
+                    <!-- Delete Button -->
+                    <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
+                        <span class="mdi mdi-delete mdi-24px"></span>
+                        <span class="mdi mdi-delete-empty mdi-24px"></span>
+                    </a>
+
                     <!-- Route Details -->
                     <div class="route-details">
                         <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
@@ -218,12 +208,6 @@
                             <span>Travel Mode</span>
                         </div>
                     </div>
-
-                    <!-- Delete Button -->
-                    <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
-                        <span class="mdi mdi-delete mdi-24px"></span>
-                        <span class="mdi mdi-delete-empty mdi-24px"></span>
-                    </a>
                 </div>
 
                 <!-- Navigation Buttons -->
