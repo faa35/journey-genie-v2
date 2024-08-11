@@ -106,23 +106,29 @@
                     </a>
                 </div>
 
+                <!-- Toggle Button for Local Places -->
+                <button id="togglePlacesBtn" class="btn btn-secondary btn-lg d-flex align-items-center mt-3">
+                    <span>See Nearby Local Places</span>
+                </button>
+
                 <!-- Local Places -->
-                <h1 class="text-center mb-5 mt-5">Local Places</h1>
-                <div id="map2" style="min-height: 500px; width: 100%;"></div>
+                <div id="localPlacesSection" style="display: none;">
+                    <h1 class="text-center mb-5 mt-5">Local Places</h1>
+                    <div id="map2" style="min-height: 500px; width: 100%;"></div>
 
-                <!-- Local Places Table -->
-                <table id="eventsTable" class="table table-bordered mt-3 mb-3">
-                    <thead>
-                        <tr>
-                            <th>Place Name</th>
-                            <th>Add to Checklist</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Places will be dynamically added here -->
-                    </tbody>
-                </table>
-
+                    <!-- Local Places Table -->
+                    <table id="eventsTable" class="table table-bordered mt-3 mb-3">
+                        <thead>
+                            <tr>
+                                <th>Place Name</th>
+                                <th>Add to Checklist</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Places will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Notes -->
                 <h2 class="mt-5 mb-3">Notes</h2>
@@ -145,6 +151,7 @@
 
     <script th:inline="javascript">
         let map;
+        let placesVisible = false;
 
         // Destination marker calculations
         let destinationCoords = /*[[ ${route.endCoords} ]]*/'';
@@ -270,9 +277,15 @@
                 });
                 map.fitBounds(bounds);
             }
-
-
         }
+
+        // Toggle Places Section
+        document.getElementById('togglePlacesBtn').addEventListener('click', function() {
+            placesVisible = !placesVisible;
+            const localPlacesSection = document.getElementById('localPlacesSection');
+            localPlacesSection.style.display = placesVisible ? 'block' : 'none';
+            this.textContent = placesVisible ? 'Hide Nearby Local Places' : 'See Nearby Local Places';
+        });
     </script>
 </body>
 </html>
