@@ -77,33 +77,52 @@
             text-overflow: ellipsis;
         }
 
-        .route-card .edit-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 12px;
-            padding: 5px 10px;
-            font-size: 0.875rem;
-        }
-
+        .route-card .edit-button,
         .route-card .delete-button {
             display: flex;
             align-items: center;
             justify-content: center;
             background: none;
-            /* border: 1px solid #ccc; */
             height: 48px;
-            padding: 0 24px;
+            padding: 0 10px;
             letter-spacing: .25px;
             border-radius: 24px;
             cursor: pointer;
             font-size: 16px;
-            color: red;
             position: absolute;
-            bottom: 10px;
             right: 10px;
+        }
+
+        .route-card .edit-button {
+            top: 10px;
+            color: #007bff;
+            /* border: 1px solid #007bff; */
+        }
+
+        .edit-button:focus {
+            outline: none;
+        }
+
+        .edit-button .mdi {
+            margin-right: 8px;
+        }
+
+        .edit-button>.mdi-pencil-outline {
+            display: block;
+        }
+
+        .edit-button:hover {
+            background-color: #e6f2ff;
+        }
+
+        .edit-button:focus {
+            box-shadow: 0 0 0 4px #cce5ff;
+        }
+
+        .route-card .delete-button {
+            bottom: 10px;
+            color: red;
+            /* border: 1px solid #ccc; */
         }
 
         .delete-button:focus {
@@ -205,7 +224,9 @@
                 <div th:each="route : ${routes}" class="d-flex align-items-start mb-4">
                     <!-- Route Card -->
                     <div class="route-card col-md-8">
-                        <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">Edit</a>
+                        <a th:href="@{'/edit-route/' + ${route.id}}" class="edit-button">
+                            <span class="mdi mdi-pencil-outline mdi-24px"></span>
+                        </a>
 
                         <div class="route-details">
                             <h5 th:text="${route.formattedCreationDate}">Date Creation</h5>
@@ -233,8 +254,6 @@
                         <a th:href="@{'/delete-route/' + ${route.id}}" class="delete-button">
                             <span class="mdi mdi-delete mdi-24px"></span>
                             <span class="mdi mdi-delete-empty mdi-24px"></span>
-                            <!-- <span>DELETE</span>  -->
-                            <span></span> 
                         </a>
                     </div>
 
