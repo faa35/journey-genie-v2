@@ -332,7 +332,6 @@
                 placeName.innerText = placeMarker.title;
                 tableRow.appendChild(placeName);
 
-
                 let addPlace = document.createElement("td");
                 let addForm = document.createElement("form");
                 addForm.setAttribute("action", "/addPlace/" + /*[[ ${route.id} ]]*/'');     
@@ -342,10 +341,10 @@
                 placeData.setAttribute("value", placeMarker.title);
                 placeData.setAttribute("name", "placeTitle");                               
                 addForm.appendChild(placeData);
-                let formButton = document.createElement("input");
+                let formButton = document.createElement("button");
                 formButton.setAttribute("type", "submit");
-                formButton.setAttribute("value", "Add to checklist");
                 formButton.classList.add("btn", "btn-white", "text-info", "text-decoration-underline");
+                formButton.innerHTML = '<i class="bi bi-plus-circle"></i>'; // Bootstrap icon for plus sign
                 addForm.appendChild(formButton);
                 addPlace.appendChild(addForm);
                 tableRow.appendChild(addPlace);
