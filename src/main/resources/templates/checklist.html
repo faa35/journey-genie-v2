@@ -8,6 +8,33 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX-Ukm1kWZZt1ZQnKaiteVcl2OxoCH5S8&libraries=places"></script>
     <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
+    <style>
+        .container-fluid {
+            margin-top: 20px;
+        }
+
+        .todo-app {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-info {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body onload="initMap()">
     <!-- Navigation bar -->
@@ -33,72 +60,79 @@
         </nav>
     </header>
 
-    <!-- Container -->
-    <div class="container" style="margin-top: 100px;">
-        <div class="todo-app">
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <h1 class="text-center mb-5"> Checklist</h1>
-
-                    <!-- Activities Table -->
-                    <h3 class="mb-3"> Activities </h3>
+    <!-- Main Container -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Column (Activities and Places) -->
+            <div class="col-md-5">
+                <div class="todo-app">
+                    <h3 class="mb-3">Activities</h3>
                     <table class="table table-hover table-bordered mb-3">
-                        <tr class="table-primary">
-                            <th class="w-75"> Activity Name </th>
-                            <th> </th>
-                        </tr>
-                        <tr th:each="activity : ${activities}">
-                            <td id="activityBox" th:text="${activity}" class="w-75"></td>
-                            <td>
-                                <form th:action="@{/deleteActivity/{id}(id=${checklistID})}" method="POST">
-                                    <input type="hidden" th:value="${activity}" name="activityTitle">
-                                    <input type="submit" value="DELETE" class="btn btn-white text-danger" style="text-decoration: underline;">
-                                </form>
-                            </td>
-                        </tr>
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="w-75">Activity Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="activity : ${activities}">
+                                <td th:text="${activity}" class="w-75"></td>
+                                <td>
+                                    <form th:action="@{/deleteActivity/{id}(id=${checklistID})}" method="POST">
+                                        <input type="hidden" th:value="${activity}" name="activityTitle">
+                                        <input type="submit" value="DELETE" class="btn btn-white text-danger" style="text-decoration: underline;">
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     <form th:action="@{/makeChecklist/{id}(id=${checklistID})}" method="GET">
-                        <input type="submit" value="Add more activities" class="btn btn-info text-white mb-5">
+                        <input type="submit" value="Add more activities" class="btn btn-info text-white mb-4">
                     </form>
 
-                    <!-- Places Table -->
-                    <h3 class="mb-3"> Places </h3>
+                    <h3 class="mb-3">Places</h3>
                     <table class="table table-hover table-bordered mb-3">
-                        <tr class="table-primary">
-                            <th class="w-75"> Place Name </th>
-                            <th> </th>
-                        </tr>
-                        <tr th:each="place : ${places}">
-                            <td id="placeBox" th:text="${place}" class="w-75"></td>
-                            <td class="text-danger" style="text-decoration: underline;">
-                                <form th:action="@{/deletePlace/{id}(id=${checklistID})}" method="POST">
-                                    <input type="hidden" th:value="${place}" name="placeTitle">
-                                    <input type="submit" th:value="DELETE" class="btn btn-white text-danger" style="text-decoration: underline;">
-                                </form>
-                            </td>
-                        </tr>
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="w-75">Place Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="place : ${places}">
+                                <td th:text="${place}" class="w-75"></td>
+                                <td class="text-danger" style="text-decoration: underline;">
+                                    <form th:action="@{/deletePlace/{id}(id=${checklistID})}" method="POST">
+                                        <input type="hidden" th:value="${place}" name="placeTitle">
+                                        <input type="submit" value="DELETE" class="btn btn-white text-danger" style="text-decoration: underline;">
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     <form th:action="@{/route-details/{id}(id=${checklistID})}" method="GET">
-                        <input type="submit" value="Add more places" class="btn btn-info text-white mb-5">
+                        <input type="submit" value="Add more places" class="btn btn-info text-white mb-4">
                     </form>
+                </div>
+            </div>
 
-                    <!-- New Location Section -->
-                    <h3 class="mb-3"> Add a New Location </h3>
-                    <div class="row mt-3">
-                        <div class="col-10">
-                            <input id="location-input" class="location form-control" type="text" placeholder="Enter location">
+            <!-- Right Column (Map and Location Input) -->
+            <div class="col-md-7">
+                <div class="todo-app">
+                    <h3 class="mb-3">Add a New Location</h3>
+                    <div class="row mb-3">
+                        <div class="col-md-10">
+                            <input id="location-input" class="form-control" type="text" placeholder="Enter location">
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <button onclick="displayPlaceDetails()" class="btn btn-info">Show Place</button>
                         </div>
                     </div>
                     
-                    <div id="map" style="width: 100%; height: 500px;" class="mt-5"></div>
+                    <div id="map" class="mb-3"></div>
                     <gmpx-place-overview id="place-overview">
                         <gmpx-place-directions-button slot="action">Directions</gmpx-place-directions-button>
                     </gmpx-place-overview>
-
-                    <a href="/saved-routes" class="btn btn-link mb-5">Back to Saved Routes</a>
                 </div>
             </div>
         </div>
