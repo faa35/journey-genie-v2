@@ -199,6 +199,7 @@
         <table id="eventsTable" class="table table-bordered mt-3 mb-3">
             <thead>
                 <tr>
+                    <th>Place ID</th>
                     <th>Place Name</th>
                     <th>Add to Checklist</th>
                 </tr>
@@ -206,7 +207,7 @@
             <tbody>
                 <!-- Places will be dynamically added here -->
             </tbody>
-        </table>
+        </table>        
     </div>
 
     <!-- Notes -->
@@ -248,7 +249,9 @@
     directionsRenderer.setMap(map);
 
     async function initMap() {
+        // Importing required classes
         const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { PlacesService, PlacesServiceStatus, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
 
         // Creating the map
         map = new Map(document.getElementById("map2"), {
@@ -277,82 +280,84 @@
     }
 
     async function nearbyPlaces() {
-        // Getting Stuff
-        const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary(
-            "places",
-        );
+        const service = new google.maps.places.PlacesService(map);
+        const position = new google.maps.LatLng(destinationLat, destinationLongit);
 
-        // Making the request
-        let position = new google.maps.LatLng(destinationLat, destinationLongit);
         const request = {
-            fields: ["displayName", "location", "businessStatus"],
-            locationRestriction: {
-            center: position,
-            radius: 10000,
-            },
-            includedPrimaryTypes: ["tourist_attraction", "historical_landmark", "park", "museum"],
-            maxResultCount: 20,
-            rankPreference: SearchNearbyRankPreference.POPULARITY
+            location: position,
+            radius: 20000, // Radius in meters
+            type: ["tourist_attraction"], // Types of places you are looking for
+            rankBy: google.maps.places.RankBy.PROMINENCE // Rank by prominence
         };
 
-        // Checking if there are places found
-        const { places } = await Place.searchNearby(request);
-        if (places.length) {
-            console.log(places);
+        service.nearbySearch(request, function(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                const bounds = new google.maps.LatLngBounds();
 
-            const { LatLngBounds } = await google.maps.importLibrary("core");
-            const bounds = new LatLngBounds();
+                results.forEach((place) => {
+                    const placeMarker = new google.maps.Marker({
+                        map: map,
+                        position: place.geometry.location,
+                        title: place.name,
+                        icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                    });
 
-            // Loop through the places and adding markers on the map
-            places.forEach((place) => {
-                const placeMarker = new google.maps.Marker({
-                    map: map,
-                    position: place.location,
-                    title: place.displayName,
-                    icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                    // Adding an info window to each marker
+                    let infoWindow = new google.maps.InfoWindow({
+                        content: "<h5>" + place.name + "</h5>"
+                    });
+                    placeMarker.addListener("click", () => {
+                        infoWindow.open(map, placeMarker);
+                    });
+
+                    bounds.extend(place.geometry.location);
+
+                    // Appending the place to the table
+                    let table = document.getElementById("eventsTable");
+
+                    let tableRow = document.createElement("tr");
+
+                    // Place ID column
+                    let placeId = document.createElement("td");
+                    placeId.innerText = place.place_id;
+                    tableRow.appendChild(placeId);
+
+                    // Place Name column
+                    let placeName = document.createElement("td");
+                    placeName.innerText = place.name;
+                    tableRow.appendChild(placeName);
+
+                    // Add to Checklist column
+                    let addPlace = document.createElement("td");
+                    let addForm = document.createElement("form");
+                    addForm.setAttribute("action", "/addPlace/" + /*[[ ${route.id} ]]*/'');     
+                    addForm.setAttribute("method", "POST");                                     
+                    let placeData = document.createElement("input");
+                    placeData.setAttribute("type", "hidden");
+                    placeData.setAttribute("value", place.name);
+                    placeData.setAttribute("name", "placeTitle");                               
+                    addForm.appendChild(placeData);
+                    let placeIdData = document.createElement("input");
+                    placeIdData.setAttribute("type", "hidden");
+                    placeIdData.setAttribute("value", place.place_id);
+                    placeIdData.setAttribute("name", "placeId");
+                    addForm.appendChild(placeIdData);
+                    let formButton = document.createElement("input");
+                    formButton.setAttribute("type", "submit");
+                    formButton.setAttribute("value", "Add to checklist");
+                    formButton.classList.add("btn", "btn-white", "text-info", "text-decoration-underline");
+                    addForm.appendChild(formButton);
+                    addPlace.appendChild(addForm);
+                    tableRow.appendChild(addPlace);
+
+                    table.appendChild(tableRow);
                 });
 
-                // Adding an info window to each marker
-                let infoWindow = new google.maps.InfoWindow({});
-                let windowContent = "<h5>" + placeMarker.title + "</h5>";
-                infoWindow.setContent(windowContent);
-                placeMarker.addListener("click", () => {
-                    infoWindow.open(map, placeMarker);
-                });
-
-                bounds.extend(place.location);
-                console.log(place);
-
-                // Appending the place to the table
-                let table = document.getElementById("eventsTable");
-
-                let tableRow = document.createElement("tr");
-
-                let placeName = document.createElement("td");
-                placeName.innerText = placeMarker.title;
-                tableRow.appendChild(placeName);
-
-                let addPlace = document.createElement("td");
-                let addForm = document.createElement("form");
-                addForm.setAttribute("action", "/addPlace/" + /*[[ ${route.id} ]]*/'');     
-                addForm.setAttribute("method", "POST");                                     
-                let placeData = document.createElement("input");
-                placeData.setAttribute("type", "hidden");
-                placeData.setAttribute("value", placeMarker.title);
-                placeData.setAttribute("name", "placeTitle");                               
-                addForm.appendChild(placeData);
-                let formButton = document.createElement("button");
-                formButton.setAttribute("type", "submit");
-                formButton.classList.add("btn", "btn-white", "text-info", "text-decoration-underline");
-                formButton.innerHTML = '<i class="bi bi-plus-circle"></i>'; // Bootstrap icon for plus sign
-                addForm.appendChild(formButton);
-                addPlace.appendChild(addForm);
-                tableRow.appendChild(addPlace);
-
-                table.appendChild(tableRow);
-            });
-            map.fitBounds(bounds);
-        }
+                map.fitBounds(bounds);
+            } else {
+                console.error('Error occurred: ' + status);
+            }
+        });
     }
 
     // Toggle Places Section
