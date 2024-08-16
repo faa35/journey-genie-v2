@@ -236,6 +236,11 @@
 </main>
 
 <script th:inline="javascript">
+    // Pass the API key from the server-side context to the JavaScript variable
+    const googleApiKey = /*[[${GOOGLE_API_KEY}]]*/'';
+</script>
+
+<script th:inline="javascript">
     let map;
     let placesVisible = false;
 
@@ -399,7 +404,7 @@
         
         // Update the place overview component with the new place ID
         overviewContainer.innerHTML = `
-            <gmpx-api-loader key="AIzaSyCX-Ukm1kWZZt1ZQnKaiteVcl2OxoCH5S8" solution-channel="GMP_GCC_placeoverview_v1_xl"></gmpx-api-loader>
+            <gmpx-api-loader key="${googleApiKey}" solution-channel="GMP_GCC_placeoverview_v1_xl"></gmpx-api-loader>
             <gmpx-place-overview place="${placeId}">
                 <gmpx-place-directions-button slot="action">
                     Directions
