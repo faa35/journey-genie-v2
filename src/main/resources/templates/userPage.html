@@ -72,7 +72,7 @@
 
         /* Hide text on small screens */
         @media (max-width: 576px) {
-            .navbar-nav .nav-link span.fs-6 {
+            .navbar-nav .nav-link span.fs-4 {
                 display: none;
             }
             .navbar-nav .nav-link {
@@ -144,6 +144,11 @@
                 font-size: 34px; /* Larger icon size for larger screens */
             }
         }
+
+        /* Set all icon text to fs-4 by default */
+        .navbar-nav .nav-link .fs-4 {
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 
@@ -157,7 +162,7 @@
             </form>
         </nav>
     </header>
-    
+
     <!-- Secondary Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid justify-content-center">
@@ -166,42 +171,42 @@
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark active" href="/home">
                         <span class="material-icons">home</span>
-                        <span class="fs-6">Home</span>
+                        <span class="fs-4">Home</span>
                     </a>
                 </li>
                 <!-- Routes -->
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark" href="/map">
                         <span class="material-icons">directions</span>
-                        <span class="fs-6">Routes</span>
+                        <span class="fs-4">Routes</span>
                     </a>
                 </li>
                 <!-- Preferences -->
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark" href="/preferences">
                         <span class="material-icons">settings</span>
-                        <span class="fs-6">Preferences</span>
+                        <span class="fs-4">Preferences</span>
                     </a>
                 </li>
                 <!-- Saved Routes -->
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark" href="/saved-routes">
                         <span class="material-icons">bookmark</span>
-                        <span class="fs-6">Saved Routes</span>
+                        <span class="fs-4">Saved Routes</span>
                     </a>
                 </li>
                 <!-- Weather -->
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark" href="/weather">
                         <span class="material-icons">wb_sunny</span>
-                        <span class="fs-6">Weather</span>
+                        <span class="fs-4">Weather</span>
                     </a>
                 </li>
                 <!-- Track Budget -->
                 <li class="nav-item mx-2">
                     <a class="nav-link text-dark" href="/track-budget">
                         <span class="material-icons">account_balance_wallet</span>
-                        <span class="fs-6">Track Budget</span>
+                        <span class="fs-4">Track Budget</span>
                     </a>
                 </li>
             </ul>
