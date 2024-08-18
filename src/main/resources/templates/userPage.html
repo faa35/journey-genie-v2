@@ -67,7 +67,7 @@
 
         .navbar-nav .nav-link.active::after {
             width: 100%;
-            height: 4px; /* Bolder underline for the active page */
+            height: 6px; /* Bolder underline for the active page */
         }
 
         /* Hide text on small screens */
@@ -80,30 +80,81 @@
                 padding-right: 5px;
             }
         }
+
+        /* Styling for the main navbar */
+        .navbar-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: transparent; /* Make the navbar background transparent */
+        }
+
+        .navbar-main .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-main .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar-main .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* General styles for both navbars on larger screens */
+        @media (min-width: 992px) {
+            /* Main Navbar Styling for Larger Screens */
+            .navbar-main {
+                padding: 25px 60px;
+            }
+
+            .navbar-main .brand {
+                font-size: 32px; /* Larger font size for the brand name */
+            }
+
+            .navbar-main .logout-btn {
+                font-size: 20px; /* Larger font size for the log out button */
+                padding: 12px 30px; /* Larger padding for the log out button */
+            }
+
+            /* Secondary Navbar Styling for Larger Screens */
+            .navbar.navbar-light.bg-light {
+                padding: 20px 0; /* Increase padding for the secondary navbar */
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 1.25rem; /* fs-4 for larger screens */
+                padding-bottom: 14px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-nav .nav-link::after {
+                height: 5px; /* Increase the underline height on hover and active state */
+            }
+
+            .navbar-nav .nav-link .material-icons {
+                font-size: 34px; /* Larger icon size for larger screens */
+            }
+        }
     </style>
 </head>
 
 <body>
-    <!-- Navigation bar -->
+    <!-- Main Navbar -->
     <header>
-        <nav class="navbar navbar-expand-md bg-info h4 px-4 py-3 text-white" style="min-height: 75px;">
-            <!-- Website name-->
-            <span class="fs-4 px-2">JourneyGenie</span>
-
-            <!-- Other pages -->
-            <div class="navbar-collapse fs-5 d-flex justify-content-md-end justify-content-center">
-                <ul class="navbar-nav">
-                    <!-- Home -->
-                    <!-- <form action="/home" method="GET">
-                        <input type="submit" value="Home" class="btn btn-dark text-white mx-2"></input>
-                    </form> -->
-
-                    <!-- Log out -->
-                    <form action="/logout" method="POST">
-                        <input type="submit" value="Log out" class="btn btn-danger text-white mx-2"></input>
-                    </form>
-                </ul>
-            </div>
+        <nav class="navbar-main">
+            <span class="brand">JourneyGenie</span>
+            <form action="/logout" method="POST">
+                <input type="submit" value="Log out" class="logout-btn">
+            </form>
         </nav>
     </header>
     
