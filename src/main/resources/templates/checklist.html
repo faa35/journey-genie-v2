@@ -6,9 +6,150 @@
     <title>Checklist</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://maps.googleapis.com/maps/api/js?key=API&libraries=places"></script>
+        <!-- Material Design Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://maps.googleapis.com/maps/api/js?key=API&libraries=places"></script>
     <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
     <style>
+                .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-body a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        .material-icons {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            justify-content: center;
+            flex-direction: row; /* Ensure items are in a row */
+            flex-wrap: nowrap;
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background-color: #000; /* Underline color */
+            transition: width 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%; /* Full width underline on hover */
+        }
+
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+            height: 6px; /* Bolder underline for the active page */
+        }
+
+        /* Hide text on small screens */
+        @media (max-width: 576px) {
+            .navbar-nav .nav-link span.fs-4 {
+                display: none;
+            }
+            .navbar-nav .nav-link {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+        /* Styling for the main navbar */
+        .navbar-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: transparent; /* Make the navbar background transparent */
+        }
+
+        .navbar-main .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-main .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar-main .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* General styles for both navbars on larger screens */
+        @media (min-width: 992px) {
+            /* Main Navbar Styling for Larger Screens */
+            .navbar-main {
+                padding: 25px 60px;
+            }
+
+            .navbar-main .brand {
+                font-size: 32px; /* Larger font size for the brand name */
+            }
+
+            .navbar-main .logout-btn {
+                font-size: 20px; /* Larger font size for the log out button */
+                padding: 12px 30px; /* Larger padding for the log out button */
+            }
+
+            /* Secondary Navbar Styling for Larger Screens */
+            .navbar.navbar-light.bg-light {
+                padding: 20px 0; /* Increase padding for the secondary navbar */
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 1.25rem; /* fs-4 for larger screens */
+                padding-bottom: 14px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-nav .nav-link::after {
+                height: 5px; /* Increase the underline height on hover and active state */
+            }
+
+            .navbar-nav .nav-link .material-icons {
+                font-size: 34px; /* Larger icon size for larger screens */
+            }
+        }
+
+        /* Set all icon text to fs-4 by default */
+        .navbar-nav .nav-link .fs-4 {
+            font-size: 1.25rem;
+        }
         .container-fluid {
             margin-top: 20px;
         }
@@ -37,28 +178,66 @@
     </style>
 </head>
 <body onload="initMap()">
-    <!-- Navigation bar -->
+    <!-- Main Navbar -->
     <header>
-        <nav class="navbar navbar-expand-md bg-info h4 px-4 py-3 text-white" style="min-height: 75px;">
-            <span class="fs-4 px-2"> JourneyGenie </span>
-            <div class="navbar-collapse fs-5 d-flex justify-content-md-end justify-content-center">
-                <ul class="navbar-nav">
-                    <form action="/home" method="GET">
-                        <input type="submit" value="Home" class="btn btn-dark text-white mx-2"></input>
-                    </form>
-                    <form action="/map" method="GET">
-                        <input type="submit" value="Routes" class="btn btn-dark text-white mx-2"></input>
-                    </form>
-                    <form action="/preferences" method="GET">
-                        <input type="submit" value="Preferences" class="btn btn-dark text-white mx-2"></input>
-                    </form>
-                    <form action="/logout" method="POST">
-                        <input type="submit" value="Log out" class="btn btn-danger text-white mx-2"></input>
-                    </form>
-                </ul>
-            </div>
+        <nav class="navbar-main">
+            <span class="brand">JourneyGenie</span>
+            <form action="/logout" method="POST">
+                <input type="submit" value="Log out" class="logout-btn">
+            </form>
         </nav>
     </header>
+
+    <!-- Secondary Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid justify-content-center">
+            <ul class="navbar-nav">
+                <!-- Home -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark " href="/home">
+                        <span class="material-icons">home</span>
+                        <span class="fs-4">Home</span>
+                    </a>
+                </li>
+                <!-- Routes -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark" href="/map">
+                        <span class="material-icons">directions</span>
+                        <span class="fs-4">Routes</span>
+                    </a>
+                </li>
+                <!-- Preferences -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark" href="/preferences">
+                        <span class="material-icons">settings</span>
+                        <span class="fs-4">Preferences</span>
+                    </a>
+                </li>
+                <!-- Saved Routes -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark active" href="/saved-routes">
+                        <span class="material-icons">bookmark</span>
+                        <span class="fs-4">Saved Routes</span>
+                    </a>
+                </li>
+                <!-- Weather -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark" href="/weather">
+                        <span class="material-icons">wb_sunny</span>
+                        <span class="fs-4">Weather</span>
+                    </a>
+                </li>
+                <!-- Track Budget -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-dark" href="/track-budget">
+                        <span class="material-icons">account_balance_wallet</span>
+                        <span class="fs-4">Track Budget</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 
     <!-- Main Container -->
     <div class="container-fluid">
