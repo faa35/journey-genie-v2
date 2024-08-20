@@ -148,6 +148,164 @@
             .navbar-nav .nav-link .fs-4 {
                 font-size: 1.25rem;
             }
+            .preferences-container {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa; /* Light grey background */
+        padding: 50px 20px; /* Add some padding to the container */
+        max-width: 600px; /* Limit the width of the form */
+        margin: auto; /* Center the form */
+        border-radius: 10px; /* Round the corners of the container */
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    }
+
+    .preferences-container h1 {
+        font-size: 2.5rem;
+        color: #343a40;
+        margin-bottom: 40px; /* Space below the header */
+        text-align: center;
+    }
+
+    .preferences-container label {
+        font-weight: bold;
+        color: #495057;
+        margin-bottom: 10px; /* Space between labels and inputs */
+    }
+
+    .preferences-container input[type="number"],
+    .preferences-container input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        font-size: 1rem;
+        box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1); /* Add a subtle inner shadow */
+    }
+
+    .preferences-container input[type="checkbox"] {
+        margin-left: 10px;
+        transform: scale(1.2); /* Make the checkbox slightly larger */
+    }
+
+    .preferences-container .btn {
+        padding: 14px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease; /* Smooth transition for button hover */
+    }
+
+    .preferences-container .btn-info {
+        background-color: #17a2b8;
+        border: none;
+    }
+
+    .preferences-container .btn-info:hover {
+        background-color: #138496;
+    }
+
+    .preferences-container .btn-dark {
+        background-color: #343a40;
+        border: none;
+    }
+
+    .preferences-container .btn-dark:hover {
+        background-color: #23272b;
+    }
+
+    .preferences-container .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .preferences-container .btn-danger:hover {
+        background-color: #bd2130;
+    }
+
+    #interestTable {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #interestTable td {
+        padding-bottom: 10px;
+    }
+
+    @media (max-width: 576px) {
+        .preferences-container h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .preferences-container .btn {
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        .preferences-container label {
+            font-size: 1rem;
+        }
+
+        .preferences-container input[type="number"],
+        .preferences-container input[type="text"] {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+        .preferences-container h1 {
+            font-size: 2.2rem;
+        }
+
+        .preferences-container .btn {
+            font-size: 1.1rem;
+        }
+
+        .preferences-container input[type="number"],
+        .preferences-container input[type="text"] {
+            font-size: 1rem;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .preferences-container h1 {
+            font-size: 2.5rem;
+        }
+
+        .preferences-container .btn {
+            font-size: 1.2rem;
+        }
+
+        .preferences-container input[type="number"],
+        .preferences-container input[type="text"] {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Form alignment on larger screens */
+    @media (min-width: 768px) {
+        .preferences-container form {
+            max-width: 600px;
+            margin: auto;
+        }
+    }
+
+    /* Form alignment on extra small screens */
+    @media (max-width: 575.98px) {
+        .preferences-container #preferences label,
+        .preferences-container #preferences input,
+        .preferences-container #preferences button {
+            width: 100%;
+            text-align: left;
+        }
+    }
+
+    /* Increase the padding of the buttons on mobile screens */
+    @media (max-width: 575.98px) {
+        .preferences-container .btn {
+            padding: 14px;
+        }
+    }
+            
         </style>
     <script type="importmap">
         {
@@ -329,11 +487,11 @@
             </ul>
         </div>
     </nav>
-    <main class = "container">
+    <h1 class="text-center mb-5" style = "margin-top: 100px;">Preferences</h1>
+
+    <main class = "container preferences-container">
 
         <div style = "margin-top: 100px;">
-
-                <h1 class="text-center mb-5">Preferences</h1>
                 <form th:if="${hasPreferences}" id="preferences" class="row justify-content-sm-center">
                     <label for="duration">Trip duration</label>
                     <input type="number" name="duration" id="duration" placeholder="days" th:value="${user.preferences.duration}" class = "mb-4" required>
