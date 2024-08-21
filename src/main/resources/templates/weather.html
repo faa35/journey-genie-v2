@@ -356,6 +356,28 @@
         .navbar-nav .nav-link .fs-4 {
             font-size: 1.25rem;
         }
+        @media (max-width: 768px) {
+    .weather-cards {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px; /* Space between the cards */
+        padding-bottom: 15px; /* Add padding to avoid cutting off shadows */
+        scroll-snap-type: x mandatory; /* Enable snap scrolling */
+    }
+
+    .weather-cards .card {
+        min-width: calc(80% - 10px); /* Width for the cards in the slider */
+        flex-shrink: 0; /* Prevent cards from shrinking */
+        scroll-snap-align: start; /* Ensure each card snaps to the start */
+    }
+}
+
+@media (max-width: 576px) {
+    .weather-cards .card {
+        min-width: calc(90% - 10px); /* Slightly smaller width for smaller screens */
+    }
+}
+
     </style>
     <script th:inline="javascript">
         var WEATHER_API_KEY = /*[[${weatherApiKey}]]*/ 'DEFAULT_KEY';
