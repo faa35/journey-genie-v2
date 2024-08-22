@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Route Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-       <!-- Material Design Icons -->
-       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script th:inline="javascript" th:src="'https://maps.googleapis.com/maps/api/js?key=' + ${GOOGLE_API_KEY} + '&libraries=places,geocoding'"></script>
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script th:inline="javascript"
+        th:src="'https://maps.googleapis.com/maps/api/js?key=' + ${GOOGLE_API_KEY} + '&libraries=places,geocoding'"></script>
     <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
     <style>
-                .card img {
+        .card img {
             height: 200px;
             object-fit: cover;
         }
@@ -40,7 +43,8 @@
         .navbar-nav {
             display: flex;
             justify-content: center;
-            flex-direction: row; /* Ensure items are in a row */
+            flex-direction: row;
+            /* Ensure items are in a row */
             flex-wrap: nowrap;
         }
 
@@ -58,17 +62,20 @@
             bottom: 0;
             width: 0;
             height: 3px;
-            background-color: #000; /* Underline color */
+            background-color: #000;
+            /* Underline color */
             transition: width 0.3s;
         }
 
         .navbar-nav .nav-link:hover::after {
-            width: 100%; /* Full width underline on hover */
+            width: 100%;
+            /* Full width underline on hover */
         }
 
         .navbar-nav .nav-link.active::after {
             width: 100%;
-            height: 6px; /* Bolder underline for the active page */
+            height: 6px;
+            /* Bolder underline for the active page */
         }
 
         /* Hide text on small screens */
@@ -76,6 +83,7 @@
             .navbar-nav .nav-link span.fs-4 {
                 display: none;
             }
+
             .navbar-nav .nav-link {
                 padding-left: 5px;
                 padding-right: 5px;
@@ -88,7 +96,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background-color: transparent; /* Make the navbar background transparent */
+            background-color: transparent;
+            /* Make the navbar background transparent */
         }
 
         .navbar-main .brand {
@@ -111,38 +120,46 @@
 
         /* General styles for both navbars on larger screens */
         @media (min-width: 992px) {
+
             /* Main Navbar Styling for Larger Screens */
             .navbar-main {
                 padding: 25px 60px;
             }
 
             .navbar-main .brand {
-                font-size: 32px; /* Larger font size for the brand name */
+                font-size: 32px;
+                /* Larger font size for the brand name */
             }
 
             .navbar-main .logout-btn {
-                font-size: 20px; /* Larger font size for the log out button */
-                padding: 12px 30px; /* Larger padding for the log out button */
+                font-size: 20px;
+                /* Larger font size for the log out button */
+                padding: 12px 30px;
+                /* Larger padding for the log out button */
             }
 
             /* Secondary Navbar Styling for Larger Screens */
             .navbar.navbar-light.bg-light {
-                padding: 20px 0; /* Increase padding for the secondary navbar */
+                padding: 20px 0;
+                /* Increase padding for the secondary navbar */
             }
 
             .navbar-nav .nav-link {
-                font-size: 1.25rem; /* fs-4 for larger screens */
+                font-size: 1.25rem;
+                /* fs-4 for larger screens */
                 padding-bottom: 14px;
                 padding-left: 20px;
                 padding-right: 20px;
             }
 
             .navbar-nav .nav-link::after {
-                height: 5px; /* Increase the underline height on hover and active state */
+                height: 5px;
+                /* Increase the underline height on hover and active state */
             }
 
             .navbar-nav .nav-link .material-icons {
-                font-size: 34px; /* Larger icon size for larger screens */
+                font-size: 34px;
+                /* Larger icon size for larger screens */
             }
         }
 
@@ -150,6 +167,7 @@
         .navbar-nav .nav-link .fs-4 {
             font-size: 1.25rem;
         }
+
         .weather-icon {
             font-size: 2rem;
         }
@@ -233,9 +251,50 @@
             color: #666;
         }
 
+        .local-places-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        #map2 {
+            flex: 1;
+            min-width: 50%;
+            /* Adjust based on your preference */
+        }
+
+        #eventsTable {
+            flex: 1;
+            min-width: 40%;
+            /* Adjust based on your preference */
+        }
+
+        .vertical-slider {
+            max-height: 600px;
+            /* Adjust height as needed */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 15px;
+            /* To avoid cutting off the scrollbar */
+        }
+
+        /* Optional: Customize scrollbar appearance */
+        .vertical-slider::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .vertical-slider::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 10px;
+        }
+
+        .vertical-slider::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
     </style>
 
 </head>
+
 <body onload="initMap()">
     <!-- Main Navbar -->
     <header>
@@ -296,283 +355,296 @@
             </ul>
         </div>
     </nav>
-</header>
+    </header>
 
-<!-- Container -->
-<main class="container" style="margin-top: 50px;">
-    <h1 class="text-center mb-5">Route Details</h1>
-    <div class="main-content">
-        <!-- Map Container -->
-        <div class="map-container">
-            <th:block th:if="${#ctx.containsVariable('subArr')}">
-                <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen th:inline="javascript" th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&waypoints=' + ${#strings.arrayJoin(subArr, '|')} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
-            </th:block>
-            <th:block th:unless="${#ctx.containsVariable('subArr')}">
-                <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen th:inline="javascript" th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
-            </th:block>
-        </div>
+    <!-- Container -->
+    <main class="container" style="margin-top: 50px;">
+        <h1 class="text-center mb-5">Route Details</h1>
+        <div class="main-content">
+            <!-- Map Container -->
+            <div class="map-container">
+                <th:block th:if="${#ctx.containsVariable('subArr')}">
+                    <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen
+                        th:inline="javascript"
+                        th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&waypoints=' + ${#strings.arrayJoin(subArr, '|')} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
+                </th:block>
+                <th:block th:unless="${#ctx.containsVariable('subArr')}">
+                    <iframe id="map" height="500px" width="100%" style="border:0" loading="lazy" allowfullscreen
+                        th:inline="javascript"
+                        th:src="'https://www.google.com/maps/embed/v1/directions?origin=' + ${route.startCoords} + '&destination=' + ${route.endCoords} + '&mode=' + ${route.travelMode} + '&key=' + ${GOOGLE_API_KEY}"></iframe>
+                </th:block>
+            </div>
 
-        <!-- Cards Container -->
-        <div class="cards-container">
-            <!-- Saved Routes Card -->
-            <div class="card h-100">
-                <a href="/saved-routes">
-                    <img src="https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44..v1643818850.jpg" alt="See your saved routes" class="card-img-top">
-                </a>
-                <div class="card-body">
+            <!-- Cards Container -->
+            <div class="cards-container">
+                <!-- Saved Routes Card -->
+                <div class="card h-100">
                     <a href="/saved-routes">
-                        <h5 class="card-title">Saved Routes</h5>
-                        <p class="card-text">View and manage your saved routes</p>
+                        <img src="https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44..v1643818850.jpg"
+                            alt="See your saved routes" class="card-img-top">
                     </a>
+                    <div class="card-body">
+                        <a href="/saved-routes">
+                            <h5 class="card-title">Saved Routes</h5>
+                            <p class="card-text">View and manage your saved routes</p>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Checklist Card -->
-            <div class="card h-100">
-                <a th:href="@{/makeChecklist/checklist/{id}(id=${checklistID})}">
-                    <img src="https://www.wildapricot.com/wp-content/uploads/2022/04/WA-Blog-Thumbnails-Feb.png" alt="View Checklist" class="card-img-top">
-                </a>
-                <div class="card-body">
+                <!-- Checklist Card -->
+                <div class="card h-100">
                     <a th:href="@{/makeChecklist/checklist/{id}(id=${checklistID})}">
-                        <h5 class="card-title">View Checklist</h5>
-                        <p class="card-text">Review your checklist for the journey</p>
+                        <img src="https://www.wildapricot.com/wp-content/uploads/2022/04/WA-Blog-Thumbnails-Feb.png"
+                            alt="View Checklist" class="card-img-top">
                     </a>
+                    <div class="card-body">
+                        <a th:href="@{/makeChecklist/checklist/{id}(id=${checklistID})}">
+                            <h5 class="card-title">View Checklist</h5>
+                            <p class="card-text">Review your checklist for the journey</p>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Weather Card -->
-            <div class="card h-100">
-                <a href="/weather">
-                    <img src="https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg" alt="See Weather" class="card-img-top">
-                </a>
-                <div class="card-body">
+                <!-- Weather Card -->
+                <div class="card h-100">
                     <a href="/weather">
-                        <h5 class="card-title">Weather</h5>
-                        <p class="card-text">Check the weather for your travel destinations</p>
+                        <img src="https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg"
+                            alt="See Weather" class="card-img-top">
                     </a>
+                    <div class="card-body">
+                        <a href="/weather">
+                            <h5 class="card-title">Weather</h5>
+                            <p class="card-text">Check the weather for your travel destinations</p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Toggle Button for Local Places -->
-    <button id="togglePlacesBtn" class="btn btn-secondary btn-lg d-flex align-items-center mt-3">
-        <span>See Nearby Local Places</span>
-    </button>
+        <!-- Toggle Button for Local Places -->
+        <button id="togglePlacesBtn" class="btn btn-secondary btn-lg d-flex align-items-center mt-3">
+            <span>See Nearby Local Places</span>
+        </button>
 
-    <!-- Local Places -->
-    <div id="localPlacesSection" style="display: none;">
-        <h1 class="text-center mb-5 mt-5">Local Places</h1>
-        <div id="map2" style="min-height: 500px; width: 100%;"></div>
+        <!-- Local Places -->
+        <div id="localPlacesSection" style="display: none;">
+            <h1 class="text-center mb-5 mt-5">Local Places</h1>
+            <div class="local-places-content d-flex">
+                <div id="map2" style="min-height: 500px; flex: 1;"></div>
 
-        <!-- Local Places Table -->
-        <table id="eventsTable" class="table table-bordered mt-3 mb-3">
-            <thead>
-                <tr>
-                    <th>Place Name</th>
-                    <th>Add to Checklist</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Places will be dynamically added here -->
-            </tbody>
-        </table>        
-
-        <!-- Section to display selected place information -->
-        <div id="selectedPlaceInfo" class="mt-3">
-            <h4>Selected Place Information:</h4>
-            <p><strong>Place ID:</strong> <span id="selectedPlaceId">None</span></p>
-            <p><strong>Place Name:</strong> <span id="selectedPlaceName">None</span></p>
-            <div id="overviewContainer"></div> <!-- Place overview will be loaded here -->
-        </div>
-    </div>
-
-    <!-- Notes -->
-    <h2 class="mt-5 mb-3">Notes</h2>
-    <div class="notes-container">
-        <div th:each="note : ${notes}" class="note-card col-lg-3 col-md-4 col-sm-6">
-            <div>
-                <h2 th:utext="${note.content.substring(4, note.content.indexOf('</h2>'))}"></h2>
-                <p th:utext="${note.content.substring(note.content.indexOf('</h2>') + 5)}"></p>
+                <!-- Local Places Table -->
+                <!-- Vertical Slider Container -->
+                <div class="vertical-slider mt-3 mb-3">
+                    <table id="eventsTable" class="table table-bordered mt-3 mb-3 ms-3" style="flex: 1;">
+                        <thead>
+                            <tr>
+                                <th>Place Name</th>
+                                <th>Add to Checklist</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Places will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="mt-2">
-                <a th:href="@{'/edit-note/' + ${note.id}}" class="btn btn-warning mt-1">Edit</a>
-                <a th:href="@{'/delete-note/' + ${note.id}}" class="btn btn-danger mt-1">Delete</a>
+
+            <!-- Section to display selected place information -->
+            <div id="selectedPlaceInfo" class="mt-3">
+                <h4>Selected Place Information:</h4>
+                <p><strong>Place ID:</strong> <span id="selectedPlaceId">None</span></p>
+                <p><strong>Place Name:</strong> <span id="selectedPlaceName">None</span></p>
+                <div id="overviewContainer"></div> <!-- Place overview will be loaded here -->
             </div>
         </div>
-    </div>
-    <a th:href="@{'/add-note/' + ${route.id}}" class="btn btn-primary mt-3 mb-5">Add Note</a>
-</main>
 
-<script th:inline="javascript">
-    // Pass the API key from the server-side context to the JavaScript variable
-    const googleApiKey = /*[[${GOOGLE_API_KEY}]]*/'';
-</script>
 
-<script th:inline="javascript">
-    let map;
-    let placesVisible = false;
+        <!-- Notes -->
+        <h2 class="mt-5 mb-3">Notes</h2>
+        <div class="notes-container">
+            <div th:each="note : ${notes}" class="note-card col-lg-3 col-md-4 col-sm-6">
+                <div>
+                    <h2 th:utext="${note.content.substring(4, note.content.indexOf('</h2>'))}"></h2>
+                    <p th:utext="${note.content.substring(note.content.indexOf('</h2>') + 5)}"></p>
+                </div>
+                <div class="mt-2">
+                    <a th:href="@{'/edit-note/' + ${note.id}}" class="btn btn-warning mt-1">Edit</a>
+                    <a th:href="@{'/delete-note/' + ${note.id}}" class="btn btn-danger mt-1">Delete</a>
+                </div>
+            </div>
+        </div>
+        <a th:href="@{'/add-note/' + ${route.id}}" class="btn btn-primary mt-3 mb-5">Add Note</a>
+    </main>
 
-    // Destination marker calculations
-    let destinationCoords = /*[[ ${route.endCoords} ]]*/'';
+    <script th:inline="javascript">
+        // Pass the API key from the server-side context to the JavaScript variable
+        const googleApiKey = /*[[${GOOGLE_API_KEY}]]*/'';
+    </script>
 
-    let latIndexStart = 0;
-    let latIndexEnd = destinationCoords.indexOf("%");
-    let destinationLat = parseFloat(destinationCoords.substring(latIndexStart, latIndexEnd));
+    <script th:inline="javascript">
+        let map;
+        let placesVisible = false;
 
-    let longitIndexStart = destinationCoords.indexOf("C") + 1;
-    let destinationLongit = parseFloat(destinationCoords.substring(longitIndexStart));
+        // Destination marker calculations
+        let destinationCoords = /*[[ ${route.endCoords} ]]*/'';
 
-    // Destination marker
-    let destinationMarker;
+        let latIndexStart = 0;
+        let latIndexEnd = destinationCoords.indexOf("%");
+        let destinationLat = parseFloat(destinationCoords.substring(latIndexStart, latIndexEnd));
 
-    let directionsService = new google.maps.DirectionsService();
-    let directionsRenderer = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
+        let longitIndexStart = destinationCoords.indexOf("C") + 1;
+        let destinationLongit = parseFloat(destinationCoords.substring(longitIndexStart));
 
-    async function initMap() {
-        // Importing required classes
-        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-        const { PlacesService, PlacesServiceStatus, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
+        // Destination marker
+        let destinationMarker;
 
-        // Creating the map
-        map = new Map(document.getElementById("map2"), {
-            zoom: 13,
-            center: { lat: destinationLat, lng: destinationLongit },
-            mapId: "PLACES_MAP",
-        });
+        let directionsService = new google.maps.DirectionsService();
+        let directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
 
-        // Displaying the destination by using a marker
-        destinationMarker = new google.maps.Marker({
-            position: { lat: destinationLat, lng: destinationLongit },
-            map: map,
-            title: "Destination"
-        });
+        async function initMap() {
+            // Importing required classes
+            const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+            const { PlacesService, PlacesServiceStatus, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
 
-        // Adding an info window to the destination marker
-        let infoWindow = new google.maps.InfoWindow({
-            content: "<h5> Destination </h5>"
-        });
-        destinationMarker.addListener("click", () => {
-            infoWindow.open(map, destinationMarker);
-        });
+            // Creating the map
+            map = new Map(document.getElementById("map2"), {
+                zoom: 13,
+                center: { lat: destinationLat, lng: destinationLongit },
+                mapId: "PLACES_MAP",
+            });
 
-        // Displaying nearby places
-        nearbyPlaces();
-    }
+            // Displaying the destination by using a marker
+            destinationMarker = new google.maps.Marker({
+                position: { lat: destinationLat, lng: destinationLongit },
+                map: map,
+                title: "Destination"
+            });
 
-    async function nearbyPlaces() {
-        const service = new google.maps.places.PlacesService(map);
-        const position = new google.maps.LatLng(destinationLat, destinationLongit);
+            // Adding an info window to the destination marker
+            let infoWindow = new google.maps.InfoWindow({
+                content: "<h5> Destination </h5>"
+            });
+            destinationMarker.addListener("click", () => {
+                infoWindow.open(map, destinationMarker);
+            });
 
-        const request = {
-            location: position,
-            radius: 20000, // Radius in meters
-            type: ["tourist_attraction"], // Types of places you are looking for
-            rankBy: google.maps.places.RankBy.PROMINENCE // Rank by prominence
-        };
-
-        service.nearbySearch(request, function(results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                const bounds = new google.maps.LatLngBounds();
-
-                results.forEach((place) => {
-                    const placeMarker = new google.maps.Marker({
-                        map: map,
-                        position: place.geometry.location,
-                        title: place.name,
-                        icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-                    });
-
-                    // Adding an info window to each marker
-                    let infoWindow = new google.maps.InfoWindow({
-                        content: "<h5>" + place.name + "</h5>"
-                    });
-                    placeMarker.addListener("click", () => {
-                        infoWindow.open(map, placeMarker);
-                    });
-
-                    bounds.extend(place.geometry.location);
-
-                    // Appending the place to the table
-                    let table = document.getElementById("eventsTable");
-
-                    let tableRow = document.createElement("tr");
-
-                    // Place ID and Place Name (to be used later)
-                    const placeIdValue = place.place_id;
-                    const placeNameValue = place.name;
-
-                    // Making the row clickable
-                    tableRow.style.cursor = "pointer";
-                    tableRow.addEventListener("click", function() {
-                        displaySelectedPlace(placeIdValue, placeNameValue);
-                    });
-
-                    // Place Name column
-                    let placeName = document.createElement("td");
-                    placeName.innerText = placeNameValue;
-                    tableRow.appendChild(placeName);
-
-                    // Add to Checklist column
-                    let addPlace = document.createElement("td");
-                    let addForm = document.createElement("form");
-                    addForm.setAttribute("action", "/addPlace/" + /*[[ ${route.id} ]]*/'');     
-                    addForm.setAttribute("method", "POST");                                     
-                    let placeData = document.createElement("input");
-                    placeData.setAttribute("type", "hidden");
-                    placeData.setAttribute("value", placeNameValue);
-                    placeData.setAttribute("name", "placeTitle");                               
-                    addForm.appendChild(placeData);
-                    let placeIdData = document.createElement("input");
-                    placeIdData.setAttribute("type", "hidden");
-                    placeIdData.setAttribute("value", placeIdValue);
-                    placeIdData.setAttribute("name", "placeId");
-                    addForm.appendChild(placeIdData);
-                    let formButton = document.createElement("input");
-                    formButton.setAttribute("type", "submit");
-                    formButton.setAttribute("value", "Add to checklist");
-                    formButton.classList.add("btn", "btn-white", "text-info", "text-decoration-underline");
-                    addForm.appendChild(formButton);
-                    addPlace.appendChild(addForm);
-                    tableRow.appendChild(addPlace);
-
-                    table.appendChild(tableRow);
-                });
-
-                map.fitBounds(bounds);
-            } else {
-                console.error('Error occurred: ' + status);
-            }
-        });
-    }
-
-    // Toggle Places Section
-    document.getElementById('togglePlacesBtn').addEventListener('click', function() {
-        placesVisible = !placesVisible;
-        const localPlacesSection = document.getElementById('localPlacesSection');
-        localPlacesSection.style.display = placesVisible ? 'block' : 'none';
-        this.textContent = placesVisible ? 'Hide Nearby Local Places' : 'See Nearby Local Places';
-    });
-
-    // Function to display selected place information and load the place overview
-    function displaySelectedPlace(placeId, placeName) {
-        // Update the selected place information
-        document.getElementById('selectedPlaceId').textContent = placeId;
-        document.getElementById('selectedPlaceName').textContent = placeName;
-        
-        // Create or update the place overview element
-        let overviewContainer = document.getElementById('overviewContainer');
-        
-        if (!overviewContainer) {
-            // Create the container if it doesn't exist
-            overviewContainer = document.createElement('div');
-            overviewContainer.id = 'overviewContainer';
-            document.getElementById('selectedPlaceInfo').appendChild(overviewContainer);
+            // Displaying nearby places
+            nearbyPlaces();
         }
-        
-        // Update the place overview component with the new place ID
-        overviewContainer.innerHTML = `
+
+        async function nearbyPlaces() {
+            const service = new google.maps.places.PlacesService(map);
+            const position = new google.maps.LatLng(destinationLat, destinationLongit);
+
+            const request = {
+                location: position,
+                radius: 20000, // Radius in meters
+                type: ["tourist_attraction"], // Types of places you are looking for
+                rankBy: google.maps.places.RankBy.PROMINENCE // Rank by prominence
+            };
+
+            service.nearbySearch(request, function (results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    const bounds = new google.maps.LatLngBounds();
+
+                    results.forEach((place) => {
+                        const placeMarker = new google.maps.Marker({
+                            map: map,
+                            position: place.geometry.location,
+                            title: place.name,
+                            icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                        });
+
+                        // Adding an info window to each marker
+                        let infoWindow = new google.maps.InfoWindow({
+                            content: "<h5>" + place.name + "</h5>"
+                        });
+                        placeMarker.addListener("click", () => {
+                            infoWindow.open(map, placeMarker);
+                        });
+
+                        bounds.extend(place.geometry.location);
+
+                        // Appending the place to the table
+                        let table = document.getElementById("eventsTable");
+
+                        let tableRow = document.createElement("tr");
+
+                        // Place ID and Place Name (to be used later)
+                        const placeIdValue = place.place_id;
+                        const placeNameValue = place.name;
+
+                        // Making the row clickable
+                        tableRow.style.cursor = "pointer";
+                        tableRow.addEventListener("click", function () {
+                            displaySelectedPlace(placeIdValue, placeNameValue);
+                        });
+
+                        // Place Name column
+                        let placeName = document.createElement("td");
+                        placeName.innerText = placeNameValue;
+                        tableRow.appendChild(placeName);
+
+                        // Add to Checklist column
+                        let addPlace = document.createElement("td");
+                        let addForm = document.createElement("form");
+                        addForm.setAttribute("action", "/addPlace/" + /*[[ ${route.id} ]]*/'');
+                        addForm.setAttribute("method", "POST");
+                        let placeData = document.createElement("input");
+                        placeData.setAttribute("type", "hidden");
+                        placeData.setAttribute("value", placeNameValue);
+                        placeData.setAttribute("name", "placeTitle");
+                        addForm.appendChild(placeData);
+                        let placeIdData = document.createElement("input");
+                        placeIdData.setAttribute("type", "hidden");
+                        placeIdData.setAttribute("value", placeIdValue);
+                        placeIdData.setAttribute("name", "placeId");
+                        addForm.appendChild(placeIdData);
+                        let formButton = document.createElement("input");
+                        formButton.setAttribute("type", "submit");
+                        formButton.setAttribute("value", "Add to checklist");
+                        formButton.classList.add("btn", "btn-white", "text-info", "text-decoration-underline");
+                        addForm.appendChild(formButton);
+                        addPlace.appendChild(addForm);
+                        tableRow.appendChild(addPlace);
+
+                        table.appendChild(tableRow);
+                    });
+
+                    map.fitBounds(bounds);
+                } else {
+                    console.error('Error occurred: ' + status);
+                }
+            });
+        }
+
+        // Toggle Places Section
+        document.getElementById('togglePlacesBtn').addEventListener('click', function () {
+            placesVisible = !placesVisible;
+            const localPlacesSection = document.getElementById('localPlacesSection');
+            localPlacesSection.style.display = placesVisible ? 'block' : 'none';
+            this.textContent = placesVisible ? 'Hide Nearby Local Places' : 'See Nearby Local Places';
+        });
+
+        // Function to display selected place information and load the place overview
+        function displaySelectedPlace(placeId, placeName) {
+            // Update the selected place information
+            document.getElementById('selectedPlaceId').textContent = placeId;
+            document.getElementById('selectedPlaceName').textContent = placeName;
+
+            // Create or update the place overview element
+            let overviewContainer = document.getElementById('overviewContainer');
+
+            if (!overviewContainer) {
+                // Create the container if it doesn't exist
+                overviewContainer = document.createElement('div');
+                overviewContainer.id = 'overviewContainer';
+                document.getElementById('selectedPlaceInfo').appendChild(overviewContainer);
+            }
+
+            // Update the place overview component with the new place ID
+            overviewContainer.innerHTML = `
             <gmpx-api-loader key="${googleApiKey}" solution-channel="GMP_GCC_placeoverview_v1_xl"></gmpx-api-loader>
             <gmpx-place-overview place="${placeId}">
                 <gmpx-place-directions-button slot="action">
@@ -580,7 +652,8 @@
                 </gmpx-place-directions-button>
             </gmpx-place-overview>
         `;
-    }
-</script>
+        }
+    </script>
 </body>
+
 </html>
