@@ -725,6 +725,11 @@
 </nav>
 <!-- Container -->
 <main class="container-fluid row mx-0" style="margin-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h1 class="text-center mb-5">Search Routes</h1>
+        </div>
+    </div>
     <div id="hotels-box" class="modal bg-info">
         <div class="row">
             <div class="col-10"><h3>Nearby Hotels</h3></div>
@@ -737,7 +742,7 @@
     </div>
     <div class="col-8 justify-content-center">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <button onclick="addLocation(this)" class="btn btn-primary">Add Location</button>
+                
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-info active">
                         <input type="radio" style="scale: 0; position: absolute" name="options" id="driving" onclick="setTravelMode('DRIVING')" checked>
@@ -760,6 +765,8 @@
                         <i class="mdi mdi-airplane btn-icon" title="Flying Route"></i>
                     </label>
                 </div>
+            
+                <button onclick="addLocation(this)" class="btn btn-primary">Add Location</button>
                 <!-- <button onclick="calculateBestRoute()" class="btn btn-info">Best Route</button> -->
                 <button onclick="calculateRouteAll()" class="btn btn-primary">Display Full Route</button>
                 <button onclick="clearMap()" class="btn btn-secondary">Clear Map</button>
