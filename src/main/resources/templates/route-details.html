@@ -224,7 +224,22 @@
     flex: 0 0 auto; /* Prevent cards from stretching */
     scroll-snap-align: start; /* Align each card to the start of the container */
 }
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .cards-container {
+    display: flex;
+    flex-direction: row; /* Arrange the cards in a row */
+    gap: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Snap effect while scrolling */
+    padding: 10px 0;
+}
 
+.cards-container .card {
+    flex: 0 0 auto; /* Prevent cards from stretching */
+    scroll-snap-align: start; /* Align each card to the start of the container */
+}
+}
 
         .card:hover {
             transform: scale(1.05);
