@@ -39,7 +39,7 @@
 
             for (let i = 0; i < 2; i++) {
                 addLocation()
-            }   
+            }
         }
 
         function initGeneratedTrip() {
@@ -66,7 +66,7 @@
                 console.log(addressArray[i]);
                 addLocation();
                 let activities = document.getElementsByClassName("location");
-                activities[activities.length-1].value = addressArray[i];
+                activities[activities.length - 1].value = addressArray[i];
                 addressToLatLng(addressArray[i], i);
             }
 
@@ -99,7 +99,7 @@
                 console.log(pointsArray[i]);
                 addLocation();
                 let activities = document.getElementsByClassName("location");
-                activities[activities.length-1].value = pointsArray[i];
+                activities[activities.length - 1].value = pointsArray[i];
                 addressToLatLng(pointsArray[i], i);
             }
 
@@ -164,29 +164,29 @@
 
         function moveUp(element, id) {
             let temp1 = document.getElementsByClassName("location")[id].id;
-            document.getElementsByClassName("location")[id].id = document.getElementsByClassName("location")[id-1].id;
-            document.getElementsByClassName("location")[id-1].id = temp1;
+            document.getElementsByClassName("location")[id].id = document.getElementsByClassName("location")[id - 1].id;
+            document.getElementsByClassName("location")[id - 1].id = temp1;
             element.parentNode.insertBefore(element, element.previousSibling);
 
             let temp2 = locations[id]
-            locations[id] = locations[id-1]
-            locations[id-1] = temp2
+            locations[id] = locations[id - 1]
+            locations[id - 1] = temp2
 
             let temp3 = markers[id]
-            markers[id] = markers[id-1]
-            markers[id-1] = temp3
+            markers[id] = markers[id - 1]
+            markers[id - 1] = temp3
         }
 
         async function findHotels(id) {
-            if (document.getElementById('hotels-box').classList.contains('show')) {return}
+            if (document.getElementById('hotels-box').classList.contains('show')) { return }
 
-            const options = {method: 'GET', headers: {accept: 'application/json'}};
+            const options = { method: 'GET', headers: { accept: 'application/json' } };
 
             let data;
             await fetch("https://corsproxy.io/?https://api.content.tripadvisor.com/api/v1/location/nearby_search?language=en&key=" + TRIPADVISOR_KEY + "&latLong=" + locations[id].lat() + "," + locations[id].lng() + "&category=hotels&radius=10", options)
                 .then(response => response.json())
-                .then(response => {data = response})
-                .then(() => {console.log(data)})
+                .then(response => { data = response })
+                .then(() => { console.log(data) })
                 .catch(err => console.error(err));
             document.getElementById('hotels-box').classList.add('show')
             for (const i in data.data) {
@@ -474,7 +474,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-    
+
         .route-option:hover {
             background-color: #f0f0f0;
         }
@@ -489,11 +489,11 @@
         .btn-icon:hover {
             color: #0056b3;
         }
-        
+
         .locationButton {
             color: lightgray;
         }
-        
+
         .locationButton:hover {
             color: white;
         }
@@ -514,7 +514,9 @@
 
         .show {
             display: block;
-        }        .card img {
+        }
+
+        .card img {
             height: 200px;
             object-fit: cover;
         }
@@ -543,7 +545,8 @@
         .navbar-nav {
             display: flex;
             justify-content: center;
-            flex-direction: row; /* Ensure items are in a row */
+            flex-direction: row;
+            /* Ensure items are in a row */
             flex-wrap: nowrap;
         }
 
@@ -561,17 +564,20 @@
             bottom: 0;
             width: 0;
             height: 3px;
-            background-color: #000; /* Underline color */
+            background-color: #000;
+            /* Underline color */
             transition: width 0.3s;
         }
 
         .navbar-nav .nav-link:hover::after {
-            width: 100%; /* Full width underline on hover */
+            width: 100%;
+            /* Full width underline on hover */
         }
 
         .navbar-nav .nav-link.active::after {
             width: 100%;
-            height: 6px; /* Bolder underline for the active page */
+            height: 6px;
+            /* Bolder underline for the active page */
         }
 
         /* Hide text on small screens */
@@ -579,6 +585,7 @@
             .navbar-nav .nav-link span.fs-4 {
                 display: none;
             }
+
             .navbar-nav .nav-link {
                 padding-left: 5px;
                 padding-right: 5px;
@@ -591,7 +598,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background-color: transparent; /* Make the navbar background transparent */
+            background-color: transparent;
+            /* Make the navbar background transparent */
         }
 
         .navbar-main .brand {
@@ -614,38 +622,46 @@
 
         /* General styles for both navbars on larger screens */
         @media (min-width: 992px) {
+
             /* Main Navbar Styling for Larger Screens */
             .navbar-main {
                 padding: 25px 60px;
             }
 
             .navbar-main .brand {
-                font-size: 32px; /* Larger font size for the brand name */
+                font-size: 32px;
+                /* Larger font size for the brand name */
             }
 
             .navbar-main .logout-btn {
-                font-size: 20px; /* Larger font size for the log out button */
-                padding: 12px 30px; /* Larger padding for the log out button */
+                font-size: 20px;
+                /* Larger font size for the log out button */
+                padding: 12px 30px;
+                /* Larger padding for the log out button */
             }
 
             /* Secondary Navbar Styling for Larger Screens */
             .navbar.navbar-light.bg-light {
-                padding: 20px 0; /* Increase padding for the secondary navbar */
+                padding: 20px 0;
+                /* Increase padding for the secondary navbar */
             }
 
             .navbar-nav .nav-link {
-                font-size: 1.25rem; /* fs-4 for larger screens */
+                font-size: 1.25rem;
+                /* fs-4 for larger screens */
                 padding-bottom: 14px;
                 padding-left: 20px;
                 padding-right: 20px;
             }
 
             .navbar-nav .nav-link::after {
-                height: 5px; /* Increase the underline height on hover and active state */
+                height: 5px;
+                /* Increase the underline height on hover and active state */
             }
 
             .navbar-nav .nav-link .material-icons {
-                font-size: 34px; /* Larger icon size for larger screens */
+                font-size: 34px;
+                /* Larger icon size for larger screens */
             }
         }
 
@@ -656,16 +672,19 @@
     </style>
 </head>
 <th:block th:if="${#ctx.containsVariable('points')}">
+
     <body onload="initRoute()">
 </th:block>
 <th:block th:if="${isGeneratedTrip}">
-<body onload="initGeneratedTrip()">
+
+    <body onload="initGeneratedTrip()">
 </th:block>
 <th:block th:unless="${isGeneratedTrip} or ${#ctx.containsVariable('points')}">
-<body onload="initMap()">
+
+    <body onload="initMap()">
 </th:block>
-   <!-- Main Navbar -->
-   <header>
+<!-- Main Navbar -->
+<header>
     <nav class="navbar-main">
         <span class="brand">JourneyGenie</span>
         <form action="/logout" method="POST">
@@ -732,8 +751,11 @@
     </div>
     <div id="hotels-box" class="modal bg-info">
         <div class="row">
-            <div class="col-10"><h3>Nearby Hotels</h3></div>
-            <div class="col-2"><i onclick='closeModal()' class='mdi mdi-close btn-icon locationButton' title='Close'></i></div>
+            <div class="col-10">
+                <h3>Nearby Hotels</h3>
+            </div>
+            <div class="col-2"><i onclick='closeModal()' class='mdi mdi-close btn-icon locationButton'
+                    title='Close'></i></div>
         </div>
         <div id="hotels-list"></div>
     </div>
@@ -741,43 +763,52 @@
         <div id="endOfLocations"></div>
     </div>
     <div class="col-8 justify-content-center">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-info active">
-                        <input type="radio" style="scale: 0; position: absolute" name="options" id="driving" onclick="setTravelMode('DRIVING')" checked>
-                        <i class="mdi mdi-car btn-icon" title="Car Route"></i>
-                    </label>
-                    <label class="btn btn-info">
-                        <input type="radio" style="scale: 0; position: absolute" name="options" id="walking" onclick="setTravelMode('WALKING')">
-                        <i class="mdi mdi-walk btn-icon" title="Walking Route"></i>
-                    </label>
-                    <label class="btn btn-info">
-                        <input type="radio" style="scale: 0; position: absolute" name="options" id="bicycling" onclick="setTravelMode('BICYCLING')">
-                        <i class="mdi mdi-bike btn-icon" title="Bicycling Route"></i>
-                    </label>
-                    <label class="btn btn-info">
-                        <input type="radio" style="scale: 0; position: absolute" name="options" id="transit" onclick="setTravelMode('TRANSIT')">
-                        <i class="mdi mdi-train btn-icon" title="Transit Route"></i>
-                    </label>
-                    <label class="btn btn-info">
-                        <input type="radio" style="scale: 0; position: absolute" name="options" id="flying" onclick="setTravelMode('FLYING')">
-                        <i class="mdi mdi-airplane btn-icon" title="Flying Route"></i>
-                    </label>
-                </div>
-            
-                <button onclick="addLocation(this)" class="btn btn-primary">Add Location</button>
-                <!-- <button onclick="calculateBestRoute()" class="btn btn-info">Best Route</button> -->
-                <button onclick="calculateRouteAll()" class="btn btn-primary">Display Full Route</button>
-                <button onclick="clearMap()" class="btn btn-secondary">Clear Map</button>
-                <button th:if="${#ctx.containsVariable('points')}" onclick="updateRoute()" class="btn btn-success">Save This Route</button>
-                <button th:unless="${#ctx.containsVariable('points')}" onclick="saveRoute()" class="btn btn-success">Save This Route</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-info active">
+                    <input type="radio" style="scale: 0; position: absolute" name="options" id="driving"
+                        onclick="setTravelMode('DRIVING')" checked>
+                    <i class="mdi mdi-car btn-icon" title="Car Route"></i>
+                </label>
+                <label class="btn btn-info">
+                    <input type="radio" style="scale: 0; position: absolute" name="options" id="walking"
+                        onclick="setTravelMode('WALKING')">
+                    <i class="mdi mdi-walk btn-icon" title="Walking Route"></i>
+                </label>
+                <label class="btn btn-info">
+                    <input type="radio" style="scale: 0; position: absolute" name="options" id="bicycling"
+                        onclick="setTravelMode('BICYCLING')">
+                    <i class="mdi mdi-bike btn-icon" title="Bicycling Route"></i>
+                </label>
+                <label class="btn btn-info">
+                    <input type="radio" style="scale: 0; position: absolute" name="options" id="transit"
+                        onclick="setTravelMode('TRANSIT')">
+                    <i class="mdi mdi-train btn-icon" title="Transit Route"></i>
+                </label>
+                <label class="btn btn-info">
+                    <input type="radio" style="scale: 0; position: absolute" name="options" id="flying"
+                        onclick="setTravelMode('FLYING')">
+                    <i class="mdi mdi-airplane btn-icon" title="Flying Route"></i>
+                </label>
             </div>
-            <div id="routes"></div>
-            <div id="map" style="width: 100%;" class="mt-5"></div>
-            <iframe id="iframe" height="500px" width="100%" style="border:0; display:none" loading="lazy" allowfullscreen th:inline="javascript"></iframe>
-                <a href="/saved-routes" class="btn btn-link mt-4 mb-5">See Your Saved Routes</a>
+
+            <button onclick="addLocation(this)" class="btn btn-primary">Add Location</button>
+            <!-- <button onclick="calculateBestRoute()" class="btn btn-info">Best Route</button> -->
+            <button onclick="calculateRouteAll()" class="btn btn-primary">Display Full Route</button>
+            <button onclick="clearMap()" class="btn btn-secondary">Clear Map</button>
+            <button th:if="${#ctx.containsVariable('points')}" onclick="updateRoute()" class="btn btn-success">Save This
+                Route</button>
+            <button th:unless="${#ctx.containsVariable('points')}" onclick="saveRoute()" class="btn btn-success">Save
+                This Route</button>
+        </div>
+        <div id="routes"></div>
+        <div id="map" style="width: 100%;" class="mt-5"></div>
+        <iframe id="iframe" height="500px" width="100%" style="border:0; display:none" loading="lazy" allowfullscreen
+            th:inline="javascript"></iframe>
+        <a href="/saved-routes" class="btn btn-link mt-4 mb-5">See Your Saved Routes</a>
     </div>
 </main>
 </body>
+
 </html>
