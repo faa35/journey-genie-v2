@@ -379,6 +379,18 @@
 
             <!-- Cards Container -->
             <div class="cards-container">
+
+                <!-- Nearby Places Card -->
+                <div class="card h-100" id="placesCard">
+                    <img src="https://www.shutterstock.com/image-vector/local-seo-small-businesses-marketing-260nw-2304565517.jpg"
+                        alt="See Nearby Places" class="card-img-top">
+                    <div class="card-body" id="placesCardBody">
+                        <h5 class="card-title" id="placesCardTitle">See Nearby Places</h5>
+                        <p class="card-text" id="placesCardText">Find out the nearest places to visit</p>
+                    </div>
+                </div>
+                
+
                 <!-- Saved Routes Card -->
                 <div class="card h-100">
                     <a href="/saved-routes">
@@ -438,9 +450,9 @@
         </div>
 
         <!-- Toggle Button for Local Places -->
-        <button id="togglePlacesBtn" class="btn btn-secondary btn-lg d-flex align-items-center mt-3">
+        <!-- <button id="togglePlacesBtn" class="btn btn-secondary btn-lg d-flex align-items-center mt-3">
             <span>See Nearby Local Places</span>
-        </button>
+        </button> -->
 
         <!-- Local Places -->
         <div id="localPlacesSection" style="display: none;">
@@ -637,12 +649,31 @@
         }
 
         // Toggle Places Section
-        document.getElementById('togglePlacesBtn').addEventListener('click', function () {
-            placesVisible = !placesVisible;
-            const localPlacesSection = document.getElementById('localPlacesSection');
-            localPlacesSection.style.display = placesVisible ? 'block' : 'none';
-            this.textContent = placesVisible ? 'Hide Nearby Local Places' : 'See Nearby Local Places';
-        });
+        // document.getElementById('togglePlacesBtn').addEventListener('click', function () {
+        //     placesVisible = !placesVisible;
+        //     const localPlacesSection = document.getElementById('localPlacesSection');
+        //     localPlacesSection.style.display = placesVisible ? 'block' : 'none';
+        //     this.textContent = placesVisible ? 'Hide Nearby Local Places' : 'See Nearby Local Places';
+        // });
+        document.addEventListener("DOMContentLoaded", function() {
+    const placesCard = document.getElementById("placesCard");
+    const placesCardTitle = document.getElementById("placesCardTitle");
+    const placesCardText = document.getElementById("placesCardText");
+    const localPlacesSection = document.getElementById("localPlacesSection");
+
+    placesCard.addEventListener("click", function() {
+        if (!placesVisible) {
+            placesCardTitle.textContent = "Hide Nearby Places";
+            placesCardText.textContent = "Click to hide the nearby places";
+            localPlacesSection.style.display = "block";
+        } else {
+            placesCardTitle.textContent = "See Nearby Places";
+            placesCardText.textContent = "Find out the nearest places to visit";
+            localPlacesSection.style.display = "none";
+        }
+        placesVisible = !placesVisible;
+    });
+});
 
         // Function to display selected place information and load the place overview
         function displaySelectedPlace(placeId, placeName) {
