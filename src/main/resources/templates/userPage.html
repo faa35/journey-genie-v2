@@ -379,8 +379,8 @@
         // The Gemini 1.5 models are versatile and work with most use cases
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
-        // Initialize Showdown converter
-        const converter = new showdown.Converter();
+        // Initialize Showdown converter with table support
+        const converter = new showdown.Converter({ tables: true });
       
         async function generateContent(prompt) {
           try {
