@@ -133,6 +133,36 @@
             color: inherit;
         }
 
+        #inputContainer {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            margin-right: -1px;
+            /* Remove double border between input and button */
+        }
+
+        #sendButton {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-left: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #sendButton:hover {
+            background-color: #45a049;
+        }
+
+
         @media (max-width: 768px) {
             .card {
                 margin-bottom: 20px;
@@ -418,8 +448,10 @@
     </main>
     <div id="chatContainer">
         <div id="chatContent"></div>
-        <input type="text" id="userInput" placeholder="Enter your message">
-        <button id="sendButton">Send</button>
+        <div id="inputContainer">
+            <input type="text" id="userInput" placeholder="Enter your message">
+            <button id="sendButton">Send</button>
+        </div>
     </div>
     <button id="chatIcon">💬</button>
 
