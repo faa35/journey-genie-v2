@@ -36,18 +36,47 @@
             /* Optional: Limit the maximum height to 90% of the screen */
         }
 
+        .user {
+            display: flex;
+            align-items: center;
+            max-width: 80%;
+        }
+
+        .bot {
+            display: flex;
+            align-items: center;
+            max-width: 100%;
+        }
+
         .chat {
             margin-bottom: 10px;
         }
 
         .user {
-            text-align: right;
-            color: blue;
+            justify-content: flex-end;
+            margin-left: auto;
         }
 
         .bot {
-            text-align: left;
-            color: green;
+            justify-content: flex-start;
+            margin-right: auto;
+        }
+
+        .chat-bubble {
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user .chat-bubble {
+            background-color: #e0f7fa;
+            color: #00796b;
+        }
+
+        .bot .chat-bubble {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
         }
 
         #userInput {
@@ -436,15 +465,20 @@
             const chatMessage = document.createElement('div');
             chatMessage.className = `chat ${sender}`;
 
+            // Create a chat bubble
+            const chatBubble = document.createElement('div');
+            chatBubble.className = 'chat-bubble';
+
             // Convert Markdown to HTML
             const htmlMessage = converter.makeHtml(message);
-            chatMessage.innerHTML = htmlMessage;
+            chatBubble.innerHTML = htmlMessage;
 
             // Add an id to the "Generating response..." message so it can be replaced later
             if (isGenerating) {
                 chatMessage.setAttribute('id', 'generatingMessage');
             }
 
+            chatMessage.appendChild(chatBubble);
             chatContent.appendChild(chatMessage);
             chatContent.scrollTop = chatContent.scrollHeight;
         }
