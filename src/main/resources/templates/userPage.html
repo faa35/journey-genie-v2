@@ -11,72 +11,85 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Include the Showdown CDN to convert Markdown text to HTML before displaying it -->
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.0.3/dist/showdown.min.js"></script>
-   <style>
-            #chatContainer {
-      display: none;
-      position: fixed;
-      bottom: 70px;
-      right: 20px;
-      border: 1px solid #ddd;
-      padding: 10px;
-      width: 300px;
-      height: 400px;
-      overflow-y: auto;
-      background-color: #f9f9f9;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      resize: both;
-      min-width: 40%; /* Minimum width to prevent it from becoming too small */
-      min-height: 45%; /* Minimum height to prevent it from becoming too small */
-      max-width: 60%; /* Optional: Limit the maximum width to 90% of the screen */
-      max-height: 70%; /* Optional: Limit the maximum height to 90% of the screen */
-    }
-    .chat {
-      margin-bottom: 10px;
-    }
-    .user {
-      text-align: right;
-      color: blue;
-    }
-    .bot {
-      text-align: left;
-      color: green;
-    }
-    #userInput {
-      width: calc(100% - 22px);
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    #sendButton {
-      padding: 10px 20px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #sendButton:hover {
-      background-color: #45a049;
-    }
-    #chatIcon {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    #chatIcon:hover {
-      background-color: #45a049;
-    }
+    <style>
+        #chatContainer {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            resize: both;
+            min-width: 40%;
+            /* Minimum width to prevent it from becoming too small */
+            min-height: 45%;
+            /* Minimum height to prevent it from becoming too small */
+            max-width: 60%;
+            /* Optional: Limit the maximum width to 90% of the screen */
+            max-height: 70%;
+            /* Optional: Limit the maximum height to 90% of the screen */
+        }
+
+        .chat {
+            margin-bottom: 10px;
+        }
+
+        .user {
+            text-align: right;
+            color: blue;
+        }
+
+        .bot {
+            text-align: left;
+            color: green;
+        }
+
+        #userInput {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #sendButton {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #sendButton:hover {
+            background-color: #45a049;
+        }
+
+        #chatIcon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatIcon:hover {
+            background-color: #45a049;
+        }
+
         .card img {
             height: 200px;
             object-fit: cover;
@@ -106,7 +119,8 @@
         .navbar-nav {
             display: flex;
             justify-content: center;
-            flex-direction: row; /* Ensure items are in a row */
+            flex-direction: row;
+            /* Ensure items are in a row */
             flex-wrap: nowrap;
         }
 
@@ -124,17 +138,20 @@
             bottom: 0;
             width: 0;
             height: 3px;
-            background-color: #000; /* Underline color */
+            background-color: #000;
+            /* Underline color */
             transition: width 0.3s;
         }
 
         .navbar-nav .nav-link:hover::after {
-            width: 100%; /* Full width underline on hover */
+            width: 100%;
+            /* Full width underline on hover */
         }
 
         .navbar-nav .nav-link.active::after {
             width: 100%;
-            height: 6px; /* Bolder underline for the active page */
+            height: 6px;
+            /* Bolder underline for the active page */
         }
 
         /* Hide text on small screens */
@@ -142,6 +159,7 @@
             .navbar-nav .nav-link span.fs-4 {
                 display: none;
             }
+
             .navbar-nav .nav-link {
                 padding-left: 5px;
                 padding-right: 5px;
@@ -154,7 +172,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background-color: transparent; /* Make the navbar background transparent */
+            background-color: transparent;
+            /* Make the navbar background transparent */
         }
 
         .navbar-main .brand {
@@ -177,38 +196,46 @@
 
         /* General styles for both navbars on larger screens */
         @media (min-width: 992px) {
+
             /* Main Navbar Styling for Larger Screens */
             .navbar-main {
                 padding: 25px 60px;
             }
 
             .navbar-main .brand {
-                font-size: 32px; /* Larger font size for the brand name */
+                font-size: 32px;
+                /* Larger font size for the brand name */
             }
 
             .navbar-main .logout-btn {
-                font-size: 20px; /* Larger font size for the log out button */
-                padding: 12px 30px; /* Larger padding for the log out button */
+                font-size: 20px;
+                /* Larger font size for the log out button */
+                padding: 12px 30px;
+                /* Larger padding for the log out button */
             }
 
             /* Secondary Navbar Styling for Larger Screens */
             .navbar.navbar-light.bg-light {
-                padding: 20px 0; /* Increase padding for the secondary navbar */
+                padding: 20px 0;
+                /* Increase padding for the secondary navbar */
             }
 
             .navbar-nav .nav-link {
-                font-size: 1.25rem; /* fs-4 for larger screens */
+                font-size: 1.25rem;
+                /* fs-4 for larger screens */
                 padding-bottom: 14px;
                 padding-left: 20px;
                 padding-right: 20px;
             }
 
             .navbar-nav .nav-link::after {
-                height: 5px; /* Increase the underline height on hover and active state */
+                height: 5px;
+                /* Increase the underline height on hover and active state */
             }
 
             .navbar-nav .nav-link .material-icons {
-                font-size: 34px; /* Larger icon size for larger screens */
+                font-size: 34px;
+                /* Larger icon size for larger screens */
             }
         }
 
@@ -301,7 +328,8 @@
             <div class="col-md-6 col-sm-12 mb-4">
                 <div class="card h-100">
                     <a href="/map">
-                        <img src="https://lh3.googleusercontent.com/y5V0TqII1x1VsHGzHfDl1O6CRdv_SwVEhL7ZUkteLQe9PfpyxHcY3uyA4U9HJ1PrHH0N2rT4yI886Wb4X0BVhCA-5GiG1luAeP0nsVo=rw-e365-w600" alt="Routes" class="card-img-top">
+                        <img src="https://lh3.googleusercontent.com/y5V0TqII1x1VsHGzHfDl1O6CRdv_SwVEhL7ZUkteLQe9PfpyxHcY3uyA4U9HJ1PrHH0N2rT4yI886Wb4X0BVhCA-5GiG1luAeP0nsVo=rw-e365-w600"
+                            alt="Routes" class="card-img-top">
                     </a>
                     <div class="card-body">
                         <a href="/map">
@@ -315,7 +343,8 @@
             <div class="col-md-6 col-sm-12 mb-4">
                 <div class="card h-100">
                     <a href="/saved-routes">
-                        <img src="https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44..v1643818850.jpg" alt="See your saved routes" class="card-img-top">
+                        <img src="https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44..v1643818850.jpg"
+                            alt="See your saved routes" class="card-img-top">
                     </a>
                     <div class="card-body">
                         <a href="/saved-routes">
@@ -329,7 +358,8 @@
             <div class="col-md-6 col-sm-12 mb-4">
                 <div class="card h-100">
                     <a href="/weather">
-                        <img src="https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg" alt="See Weather" class="card-img-top">
+                        <img src="https://navigator.innovation.ca/sites/default/files/2022-08/JB0_3071-5.jpg"
+                            alt="See Weather" class="card-img-top">
                     </a>
                     <div class="card-body">
                         <a href="/weather">
@@ -343,7 +373,8 @@
             <div class="col-md-6 col-sm-12 mb-4">
                 <div class="card h-100">
                     <a href="/track-budget">
-                        <img src="https://www.conquestgraphics.com/images/default-source/default-album/marketing-budget-cuts.png?sfvrsn=a172068d_0" alt="Track Budget" class="card-img-top">
+                        <img src="https://www.conquestgraphics.com/images/default-source/default-album/marketing-budget-cuts.png?sfvrsn=a172068d_0"
+                            alt="Track Budget" class="card-img-top">
                     </a>
                     <div class="card-body">
                         <a href="/track-budget">
@@ -360,89 +391,90 @@
         <div id="chatContent"></div>
         <input type="text" id="userInput" placeholder="Enter your message">
         <button id="sendButton">Send</button>
-      </div>
-      <button id="chatIcon">💬</button>
-    
-      <script type="importmap">
+    </div>
+    <button id="chatIcon">💬</button>
+
+    <script type="importmap">
         {
           "imports": {
             "@google/generative-ai": "https://esm.run/@google/generative-ai"
           }
         }
       </script>
-      <script type="module">
+    <script type="module">
         import { GoogleGenerativeAI } from "@google/generative-ai";
-      
+
         // Fetch your API_KEY
-        
+
         const API_KEY = "[[${GOOGLE_API_KEY}]]";
         // Reminder: This should only be for local testing
-    
+
         // Access your API key (see "Set up your API key" above)
         const genAI = new GoogleGenerativeAI(API_KEY);
-      
+
         // The Gemini 1.5 models are versatile and work with most use cases
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      
+
         // Initialize Showdown converter with table support
         const converter = new showdown.Converter({ tables: true });
-      
+
         async function generateContent(prompt) {
-          try {
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = await response.text();
-            return text;
-          } catch (error) {
-            console.error('Error generating content:', error);
-            return 'Failed to generate content';
-          }
+            try {
+                const persona = "You are JJ, a friendly and knowledgeable travel genie who helps people with their travel plans.";
+                const result = await model.generateContent(`${persona}\n\n${prompt}`);
+                const response = await result.response;
+                const text = await response.text();
+                return text;
+            } catch (error) {
+                console.error('Error generating content:', error);
+                return 'Failed to generate content';
+            }
         }
-      
+
         function appendChat(message, sender, isGenerating = false) {
-          const chatContent = document.getElementById('chatContent');
-          const chatMessage = document.createElement('div');
-          chatMessage.className = `chat ${sender}`;
-      
-          // Convert Markdown to HTML
-          const htmlMessage = converter.makeHtml(message);
-          chatMessage.innerHTML = htmlMessage;
-      
-          // Add an id to the "Generating response..." message so it can be replaced later
-          if (isGenerating) {
-            chatMessage.setAttribute('id', 'generatingMessage');
-          }
-      
-          chatContent.appendChild(chatMessage);
-          chatContent.scrollTop = chatContent.scrollHeight;
+            const chatContent = document.getElementById('chatContent');
+            const chatMessage = document.createElement('div');
+            chatMessage.className = `chat ${sender}`;
+
+            // Convert Markdown to HTML
+            const htmlMessage = converter.makeHtml(message);
+            chatMessage.innerHTML = htmlMessage;
+
+            // Add an id to the "Generating response..." message so it can be replaced later
+            if (isGenerating) {
+                chatMessage.setAttribute('id', 'generatingMessage');
+            }
+
+            chatContent.appendChild(chatMessage);
+            chatContent.scrollTop = chatContent.scrollHeight;
         }
-      
+
         // Event listener for the send button
         document.getElementById('sendButton').addEventListener('click', async () => {
-          const userInput = document.getElementById('userInput').value;
-          if (userInput.trim() === '') return;
-      
-          appendChat(userInput, 'user');
-          document.getElementById('userInput').value = '';
-          appendChat('Generating response...', 'bot', true);
-      
-          const generatedText = await generateContent(userInput);
-      
-          // Remove the "Generating response..." message
-          const generatingMessage = document.getElementById('generatingMessage');
-          if (generatingMessage) {
-            generatingMessage.remove();
-          }
-      
-          appendChat(generatedText, 'bot');
+            const userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return;
+
+            appendChat(userInput, 'user');
+            document.getElementById('userInput').value = '';
+            appendChat('Generating response...', 'bot', true);
+
+            const generatedText = await generateContent(userInput);
+
+            // Remove the "Generating response..." message
+            const generatingMessage = document.getElementById('generatingMessage');
+            if (generatingMessage) {
+                generatingMessage.remove();
+            }
+
+            appendChat(generatedText, 'bot');
         });
-      
+
         // Event listener for the chat icon
         document.getElementById('chatIcon').addEventListener('click', () => {
-          const chatContainer = document.getElementById('chatContainer');
-          chatContainer.style.display = chatContainer.style.display === 'none' || chatContainer.style.display === '' ? 'block' : 'none';
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.style.display = chatContainer.style.display === 'none' || chatContainer.style.display === '' ? 'block' : 'none';
         });
-      </script>
+    </script>
 </body>
 
 </html>
