@@ -448,6 +448,15 @@
     </main>
     <div id="chatContainer">
         <div id="chatContent"></div>
+
+        <!-- Predefined question -->
+        <div id="predefinedQuestionContainer" style="margin-top: 10px; margin-bottom: 10px;">
+            <button id="predefinedQuestion"
+                style="padding: 10px; border: none; background-color: #f0f0f0; color: #00796b; cursor: pointer; border-radius: 5px;">
+                Things to carry in Paris
+            </button>
+        </div>
+
         <div id="inputContainer">
             <input type="text" id="userInput" placeholder="Enter your message">
             <button id="sendButton">Send</button>
@@ -514,6 +523,16 @@
             chatContent.appendChild(chatMessage);
             chatContent.scrollTop = chatContent.scrollHeight;
         }
+
+        // Event listener for the predefined question
+        document.getElementById('predefinedQuestion').addEventListener('click', () => {
+            const userInput = document.getElementById('userInput');
+            userInput.value = 'Things to carry in Paris';
+
+            // Hide the predefined question after it's clicked
+            const predefinedQuestionContainer = document.getElementById('predefinedQuestionContainer');
+            predefinedQuestionContainer.style.display = 'none';
+        });
 
         // Event listener for the send button
         document.getElementById('sendButton').addEventListener('click', async () => {
