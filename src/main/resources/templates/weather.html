@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <!-- Material Design Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!-- Include the Showdown CDN to convert Markdown text to HTML before displaying it -->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@2.0.3/dist/showdown.min.js"></script>
     <style>
         /* Import Google font - Poppins */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -17,6 +19,168 @@
             box-sizing: border-box;
             /* font-family: 'Poppins', sans-serif; */
         }
+        #chatContainer {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            resize: both;
+            min-width: 40%;
+            /* Minimum width to prevent it from becoming too small */
+            min-height: 45%;
+            /* Minimum height to prevent it from becoming too small */
+            max-width: 60%;
+            /* Optional: Limit the maximum width to 90% of the screen */
+            max-height: 70%;
+            /* Optional: Limit the maximum height to 90% of the screen */
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            max-width: 80%;
+        }
+
+        .bot {
+            display: flex;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .chat {
+            margin-bottom: 10px;
+        }
+
+        .user {
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+
+        .bot {
+            justify-content: flex-start;
+            margin-right: auto;
+        }
+
+        .chat-bubble {
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user .chat-bubble {
+            background-color: #e0f7fa;
+            color: #00796b;
+        }
+
+        .bot .chat-bubble {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+
+        #userInput {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #sendButton {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #sendButton:hover {
+            background-color: #45a049;
+        }
+
+        #chatIcon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatIcon:hover {
+            background-color: #45a049;
+        }
+
+        /* .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-body a {
+            text-decoration: none;
+            color: inherit;
+        } */
+
+        #inputContainer {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            margin-right: -1px;
+            /* Remove double border between input and button */
+        }
+
+        #sendButton {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-left: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #sendButton:hover {
+            background-color: #45a049;
+        }
+
+
+        /* @media (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        .material-icons {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 5px;
+        } */
         body {
             /* background: #E3F2FD; */
             /* height: 100vh; */
@@ -727,5 +891,100 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div id="chatContainer">
+        <div id="chatContent"></div>
+        <div id="inputContainer">
+            <input type="text" id="userInput" placeholder="Enter your message">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+    <button id="chatIcon">💬</button>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Fetch your API_KEY
+
+        const API_KEY = "[[${GOOGLE_API_KEY}]]";
+        // Reminder: This should only be for local testing
+
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+
+        // The Gemini 1.5 models are versatile and work with most use cases
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        // Initialize Showdown converter with table support
+        const converter = new showdown.Converter({ tables: true });
+
+        async function generateContent(prompt) {
+            try {
+                const persona = "You are JJ, a friendly and knowledgeable travel genie who helps people with their travel plans.";
+                const result = await model.generateContent(`${persona}\n\n${prompt}`);
+                const response = await result.response;
+                const text = await response.text();
+                return text;
+            } catch (error) {
+                console.error('Error generating content:', error);
+                return 'Failed to generate content';
+            }
+        }
+
+        function appendChat(message, sender, isGenerating = false) {
+            const chatContent = document.getElementById('chatContent');
+            const chatMessage = document.createElement('div');
+            chatMessage.className = `chat ${sender}`;
+
+            // Create a chat bubble
+            const chatBubble = document.createElement('div');
+            chatBubble.className = 'chat-bubble';
+
+            // Convert Markdown to HTML
+            const htmlMessage = converter.makeHtml(message);
+            chatBubble.innerHTML = htmlMessage;
+
+            // Add an id to the "Generating response..." message so it can be replaced later
+            if (isGenerating) {
+                chatMessage.setAttribute('id', 'generatingMessage');
+            }
+
+            chatMessage.appendChild(chatBubble);
+            chatContent.appendChild(chatMessage);
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
+
+        // Event listener for the send button
+        document.getElementById('sendButton').addEventListener('click', async () => {
+            const userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return;
+
+            appendChat(userInput, 'user');
+            document.getElementById('userInput').value = '';
+            appendChat('Generating response...', 'bot', true);
+
+            const generatedText = await generateContent(userInput);
+
+            // Remove the "Generating response..." message
+            const generatingMessage = document.getElementById('generatingMessage');
+            if (generatingMessage) {
+                generatingMessage.remove();
+            }
+
+            appendChat(generatedText, 'bot');
+        });
+
+        // Event listener for the chat icon
+        document.getElementById('chatIcon').addEventListener('click', () => {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.style.display = chatContainer.style.display === 'none' || chatContainer.style.display === '' ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>

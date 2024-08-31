@@ -16,6 +16,9 @@ public class WeatherController {
     @Value("${WEATHER_API_KEY}")
     private String weatherApiKey;
 
+    @Value("${GOOGLE_API_KEY}")
+    private String GOOGLE_API_KEY;
+
     @GetMapping("/weather")
     public String showWeatherDashboard(Model model, HttpServletResponse response, HttpServletRequest request, HttpSession session) {
         // Finding the session
@@ -29,6 +32,7 @@ public class WeatherController {
 
         // Else show the weather dashboard
         model.addAttribute("weatherApiKey", weatherApiKey);
+        model.addAttribute("GOOGLE_API_KEY", GOOGLE_API_KEY);
         return "weather";
     }
 }
