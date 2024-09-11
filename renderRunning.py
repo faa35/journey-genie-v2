@@ -12,8 +12,8 @@ def keep_website_active():
             else:
                 print(f"Failed to connect. Status code: {response.status_code}")
             
-            # Wait for 5 minutes before sending another request
-            time.sleep(40)  # 300 seconds = 5 minutes
+            # Wait for 40 seconds before sending another request
+            time.sleep(40)  # meaning 40 seconds
     except KeyboardInterrupt:
         print("Process stopped by the user.")
 
