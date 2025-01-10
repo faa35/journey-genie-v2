@@ -20,7 +20,7 @@ public class JourneyGenieApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**") 
-				.allowedOrigins("http://localhost:3000/")
+				.allowedOrigins("https://acanto7.vercel.app")
 				.allowedHeaders("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
 			}
