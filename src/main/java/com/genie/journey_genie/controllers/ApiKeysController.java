@@ -26,6 +26,10 @@ public class ApiKeysController {
     @Value("${GOOGLE_MAPS_API_KEY}")
     private String googleMapsApiKey;
 
+    @Value("${OPENAI_API_KEY}")
+    private String openaiApiKey;
+
+
     @GetMapping("/api/details")
     public Map<String, String> getDetails() {
         return Map.of(
@@ -33,7 +37,8 @@ public class ApiKeysController {
             "lastFmUsername", lastFmUsername,
             "discordUserId", discordUserId,
             "geminiApiKey", geminiApiKey,
-            "googleMapsApiKey", googleMapsApiKey
+            "googleMapsApiKey", googleMapsApiKey,
+            "openaiApiKey", openaiApiKey
         );
     }
 }
