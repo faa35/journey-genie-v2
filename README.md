@@ -90,3 +90,6 @@ When logged in, users can view their saved routes. On the page of an individual 
 ### User Story: Notes feature
 
 On the “Route Details” page, the user can see the routes they saved previously. Under the map, there is another map showing nearby places that might interest them. Additionally, there is a list of these nearby places. Below the list, the user can add notes. For each route that the user saved, there can be multiple notes and these are only accessible by that particular saved route only.  The user might have plans or activities they want to do at that location, which they can add to the notes. They might also want to list all the items they plan to carry with them, so they can add another note for that. The user can edit or delete these notes as well. <br><br><br>
+
+
+trying to figure out Azure
