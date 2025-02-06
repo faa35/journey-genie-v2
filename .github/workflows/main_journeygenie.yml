@@ -13,8 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
-
+      contents: read # This is required for actions/checkout
     steps:
       - uses: actions/checkout@v4
 
@@ -40,15 +39,15 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-  
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -63,4 +62,18 @@ jobs:
           app-name: 'JourneyGenie'
           slot-name: 'Production'
           package: '*.jar'
-          
+
+      - name: Set Environment Variables in Azure
+        run: |
+          az webapp config appsettings set \
+            --name JourneyGenie \
+            --resource-group JourneyGenieResourceGroup \
+            --settings \
+            DB_URL=${{ secrets.DB_URL }} \
+            DB_USERNAME=${{ secrets.DB_USERNAME }} \
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
+            WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }} \
+            CHATGPT_API_KEY=${{ secrets.CHATGPT_API_KEY }} \
+            OPENCURRENCY_API_KEY=${{ secrets.OPENCURRENCY_API_KEY }} \
+            TRIPADVISOR_API_KEY=${{ secrets.TRIPADVISOR_API_KEY }}
