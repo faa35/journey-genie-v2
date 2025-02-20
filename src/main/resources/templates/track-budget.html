@@ -301,7 +301,7 @@
                     </div>
                 </div>
                 <div class="form-column">
-                    <button onclick="toggleMoreOptions()" id="toggleButton" class="btn btn-secondary mt-4">More</button>
+                    <button onclick="toggleMoreOptions()" id="toggleButton" class="btn btn-secondary mt-4">🔽 Change currencies</button>
                     <div id="moreOptions">
                         <div class="mb-3 mt-4">
                             <label for="fromCurrency" class="form-label">From Currency:</label>
@@ -717,10 +717,10 @@
                 var toggleButton = document.getElementById("toggleButton");
                 if (moreOptions.style.display === "none" || moreOptions.style.display === "") {
                     moreOptions.style.display = "block";
-                    toggleButton.innerText = "Less";
+                    toggleButton.innerText = "🔼 Hide Change Currencies";
                 } else {
                     moreOptions.style.display = "none";
-                    toggleButton.innerText = "More";
+                    toggleButton.innerText = "🔽 Change Currencies";
                 }
             }
 
